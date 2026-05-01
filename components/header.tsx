@@ -3,7 +3,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { authClient } from "@/lib/auth/auth-client"
 import { envClient } from "@/lib/env.client"
-import { getInitials } from "@/utility/party"
+import { getInitials } from "@/utility/commonFunction"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
@@ -19,7 +19,7 @@ interface HeaderProps {
 const Header = ({ title, isProfile, leftAction, initialSession }: HeaderProps) => {
   const router = useRouter()
   const [session, setSession] = useState<any>(initialSession)
-  
+
   useEffect(() => {
     if (initialSession) return
 

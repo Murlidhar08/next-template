@@ -90,7 +90,7 @@ export function AppSettingsForm({ initialData }: AppSettingsFormProps) {
                     <Input
                         {...form.register("appName")}
                         className="h-12 rounded-2xl border-none bg-muted/40 shadow-inner focus-visible:ring-primary/20 transition-all font-bold"
-                        placeholder="e.g. Settlr"
+                        placeholder="e.g. App Name"
                     />
                 </div>
                 <div className="space-y-2">
@@ -98,7 +98,7 @@ export function AppSettingsForm({ initialData }: AppSettingsFormProps) {
                     <Textarea
                         {...form.register("appDescription")}
                         className="min-h-[100px] rounded-2xl border-none bg-muted/40 shadow-inner focus-visible:ring-primary/20 transition-all font-bold resize-none"
-                        placeholder="A brief description..."
+                        placeholder="App description..."
                     />
                 </div>
             </ConfigCard>

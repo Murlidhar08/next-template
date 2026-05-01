@@ -8,6 +8,7 @@ import {
 import { motion } from "framer-motion";
 import {
   Calendar,
+  ChevronLeft,
   ChevronRight,
   Clock,
   DollarSign,
@@ -41,7 +42,7 @@ import { envClient } from "@/lib/env.client";
 import { Currency, ThemeMode } from "@/lib/generated/prisma/enums";
 import { t } from "@/lib/languages/i18n";
 import { cn } from "@/lib/utils";
-import { getInitials } from "@/utility/party";
+import { getInitials } from "@/utility/commonFunction";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 
@@ -106,7 +107,6 @@ export default function SettingsPage() {
 
   return (
     <div className="min-h-screen bg-background pb-34">
-
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -350,6 +350,8 @@ export default function SettingsPage() {
 }
 
 import { Skeleton } from "@/components/ui/skeleton";
+import { AppHeader } from "@/components/app-header";
+import { Header } from "@/components/header";
 
 function SettingsSkeleton() {
   return (

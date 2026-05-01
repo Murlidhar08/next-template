@@ -77,7 +77,7 @@ export default function BannedPage() {
 
   return (
     <div className="min-h-screen w-full flex flex-col lg:flex-row select-none bg-background overflow-hidden">
-      
+
       {/* LEFT SIDE */}
       <motion.div
         initial="hidden"
@@ -147,15 +147,15 @@ export default function BannedPage() {
 
             <p className="text-sm text-muted-foreground font-medium px-2 leading-relaxed">
               If you believe this is a mistake, please reach out to our team at{" "}
-              <a href="mailto:support@settlr.app" className="text-primary hover:underline font-bold">
-                support@settlr.app
+              <a href="mailto:support@example.app" className="text-primary hover:underline font-bold">
+                support@example.app
               </a>
               {" "}with your Reference ID.
             </p>
 
             <Link href="/login" onClick={async () => await authClient.signOut()} className="block">
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 className="relative rounded-2xl h-14 w-full text-lg font-bold border-muted-foreground/20 hover:bg-muted/50 transition-all duration-300 active:scale-[0.98] group"
               >
                 <LogOut className="mr-2 h-5 w-5 transition-transform group-hover:-translate-x-1" />

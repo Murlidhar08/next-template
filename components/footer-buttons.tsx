@@ -7,7 +7,6 @@ interface FooterButtonsProp {
   children: ReactNode
 }
 
-
 const FooterButtons = ({ children }: FooterButtonsProp) => {
   return (
     <div className="fixed bottom-24 right-5 lg:bottom-8 lg:right-10 z-50">
