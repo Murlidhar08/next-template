@@ -15,8 +15,8 @@ import { FooterButtons } from "@/components/footer-buttons";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { signOut } from "@/lib/auth/auth-client";
-import { getInitials } from "@/utility/party";
 import { useCurrentUser } from "@/tanstacks/user";
+import { getInitials } from "@/utility/party";
 
 export default function ProfilePage() {
     const router = useRouter();
@@ -106,7 +106,7 @@ export default function ProfilePage() {
                 <FooterButtons>
                     {/* Edit Profile */}
                     <Button
-                        onClick={() => router.push("/edit-profile" as any)}
+                        onClick={() => router.push("profile/edit" as any)}
                         className="h-14 w-14 md:w-auto md:px-12 rounded-full md:gap-3 font-semibold uppercase bg-primary text-white shadow-lg shadow-primary/30 transition-all hover:bg-primary/90 hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 p-0 md:py-2"
                     >
                         <Edit3 size={18} />

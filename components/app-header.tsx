@@ -8,11 +8,8 @@ import { useUserConfig } from "./providers/user-config-provider";
 
 const ROUTE_TITLE_MAP: Record<string, string> = {
     "/dashboard": "dashboard.title",
-    "/accounts": "accounts.title",
-    "/parties": "parties.title",
-    "/cashbook": "cashbook.title",
     "/settings": "settings.title",
-    "/profile": "settings.title", // Or map to a specific profile key if exists
+    "/profile": "settings.title",
     "/admin": "admin.title",
 };
 

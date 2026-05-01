@@ -1,9 +1,9 @@
 "use server";
 
+import { getAppConfig } from "@/lib/app-config";
 import { auth, getUserSession } from "@/lib/auth/auth";
 import { prisma } from "@/lib/prisma/prisma";
 import { headers } from "next/headers";
-import { getAppConfig } from "@/lib/app-config";
 
 export async function getAdminAppConfig() {
     const session = await getUserSession();
@@ -28,12 +28,6 @@ export async function getAdminUsers() {
         select: {
             id: true,
             contactNo: true,
-            _count: {
-                select: {
-                    createdBusinesses: true,
-                    transactions: true
-                }
-            }
         }
     });
 
@@ -42,8 +36,6 @@ export async function getAdminUsers() {
         return {
             ...u,
             contactNo: counts?.contactNo,
-            businessCount: counts?._count.createdBusinesses || 0,
-            transactionCount: counts?._count.transactions || 0
         };
     });
 
@@ -56,29 +48,7 @@ export async function comprehensiveDeleteUser(userId: string) {
 
     try {
         await prisma.$transaction(async (tx) => {
-            // 1. Find all businesses owned by the user
-            const businesses = await tx.business.findMany({
-                where: { ownerId: userId },
-                select: { id: true }
-            });
-            const businessIds = businesses.map(b => b.id);
-
-            // 2. Delete all parties in these businesses
-            await tx.party.deleteMany({
-                where: { businessId: { in: businessIds } }
-            });
-
-            // 3. Delete businesses (cascades to FinancialAccount and Transaction via businessId)
-            await tx.business.deleteMany({
-                where: { ownerId: userId }
-            });
-
-            // 4. Delete transactions created by the user (redundant if they only had their own businesses, but safe)
-            await tx.transaction.deleteMany({
-                where: { userId }
-            });
-
-            // 5. Delete the user (this cascades to Session, Account, TwoFactor, UserSettings)
+            // 1. Delete the user (this cascades to Session, Account, TwoFactor, UserSettings)
             await tx.user.delete({
                 where: { id: userId }
             });

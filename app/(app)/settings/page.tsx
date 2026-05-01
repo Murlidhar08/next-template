@@ -19,10 +19,9 @@ import {
   LogOut,
   Moon,
   PaintbrushIcon,
+  Skull,
   Sun,
-  Terminal,
-  Trash2Icon,
-  Skull
+  Terminal
 } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -234,27 +233,25 @@ export default function SettingsPage() {
               </Row>
             )}
 
-            {isDevMode && (
-              <Row icon={Languages} label={t("settings.language", language)}>
-                <Select
-                  value={language}
-                  onValueChange={(value) => {
-                    if (!value) return
-                    setLanguage(value)
-                    void upsertUserSettings({ language: value })
-                    toast.success(`Language updated`)
-                  }}
-                >
-                  <SelectTrigger className="w-[140px] h-10 rounded-xl border-2 font-bold focus:ring-primary/20">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className="rounded-2xl shadow-2xl">
-                    <SelectItem value="en" className="rounded-lg font-medium">{t("languages.en", language)}</SelectItem>
-                    <SelectItem value="hi" className="rounded-lg font-medium">{t("languages.hi", language)}</SelectItem>
-                  </SelectContent>
-                </Select>
-              </Row>
-            )}
+            <Row icon={Languages} label={t("settings.language", language)}>
+              <Select
+                value={language}
+                onValueChange={(value) => {
+                  if (!value) return
+                  setLanguage(value)
+                  void upsertUserSettings({ language: value })
+                  toast.success(`Language updated`)
+                }}
+              >
+                <SelectTrigger className="w-[140px] h-10 rounded-xl border-2 font-bold focus:ring-primary/20">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="rounded-2xl shadow-2xl">
+                  <SelectItem value="en" className="rounded-lg font-medium">{t("languages.en", language)}</SelectItem>
+                  <SelectItem value="hi" className="rounded-lg font-medium">{t("languages.hi", language)}</SelectItem>
+                </SelectContent>
+              </Select>
+            </Row>
           </Section>
         </motion.div>
 
@@ -300,17 +297,6 @@ export default function SettingsPage() {
           </Section>
         </motion.div>
 
-        {/* DATA MANAGEMENT */}
-        <motion.div variants={itemVariants}>
-          <Section title="Data Management">
-            <NavigationRow
-              icon={Trash2Icon}
-              label="Recycle Bin"
-              onClick={() => router.push("/settings/recycle-bin" as any)}
-            />
-          </Section>
-        </motion.div>
-
         {/* SECURITY */}
         <motion.div variants={itemVariants}>
           <Section title="Security & Privacy">
@@ -324,7 +310,7 @@ export default function SettingsPage() {
               label="Safety & Security"
               onClick={() => router.push("/settings/security" as any)}
             />
-             <NavigationRow
+            <NavigationRow
               icon={KeyRoundIcon}
               label="Active Sessions"
               onClick={() => router.push("/settings/session-management" as any)}

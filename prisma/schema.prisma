@@ -7,28 +7,40 @@ datasource db {
   provider = "postgresql"
 }
 
+// Enums
+enum Currency {
+  INR
+  USD
+  EUR
+}
+
+enum ThemeMode {
+  AUTO
+  LIGHT
+  DARK
+}
+
+// Application tables
 model User {
-  id                String        @id
-  name              String
-  email             String        @unique
-  emailVerified     Boolean       @default(false)
-  image             String?
-  createdAt         DateTime      @default(now())
-  updatedAt         DateTime      @updatedAt
-  contactNo         String?
-  address           String?
-  activeBusinessId  String?
-  twoFactorEnabled  Boolean?      @default(false)
-  banned            Boolean?      @default(false)
-  banReason         String?
-  banExpires        DateTime?
-  role              String?       @default("user")
-  accounts          Account[]
-  createdBusinesses Business[]
-  sessions          Session[]
-  transactions      Transaction[]
-  twofactors        TwoFactor[]
-  userSettings      UserSettings?
+  id               String         @id
+  name             String
+  email            String         @unique
+  emailVerified    Boolean        @default(false)
+  image            String?
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  contactNo        String?
+  address          String?
+  activeBusinessId String?
+  twoFactorEnabled Boolean?       @default(false)
+  banned           Boolean?       @default(false)
+  banReason        String?
+  banExpires       DateTime?
+  role             String?        @default("user")
+  accounts         Account[]
+  sessions         Session[]
+  twofactors       TwoFactor[]
+  userSettings     UserSettings[]
 
   @@map("user")
 }
@@ -100,148 +112,15 @@ model UserSettings {
   timeFormat String    @default("hh:mm a")
   language   String    @default("en")
   theme      ThemeMode @default(AUTO)
-  createdAt  DateTime  @default(now())
   user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("userSettings")
 }
 
-model Business {
-  id                String             @id @default(cuid())
-  name              String
-  ownerId           String
-  createdAt         DateTime           @default(now())
-  updatedAt         DateTime           @default(now()) @updatedAt
-  isDelete          Boolean            @default(false)
-  defAccId          String?
-  defIncomeAccId    String?
-  defExpenseAccId   String?
-  owner             User               @relation(fields: [ownerId], references: [id])
-  financialAccounts FinancialAccount[]
-  parties           Party[]
-  transactions      Transaction[]
-
-  @@index([ownerId])
-  @@map("business")
-}
-
-model FinancialAccount {
-  id                   String               @id @default(cuid())
-  name                 String
-  businessId           String
-  type                 FinancialAccountType
-  moneyType            MoneyType?
-  partyType            PartyType?
-  categoryType         CategoryType?
-  partyId              String?
-  isSystem             Boolean              @default(false)
-  isActive             Boolean              @default(true)
-  createdAt            DateTime             @default(now())
-  updatedAt            DateTime             @default(now()) @updatedAt
-  business             Business             @relation(fields: [businessId], references: [id], onDelete: Cascade)
-  party                Party?               @relation(fields: [partyId], references: [id])
-  sentTransactions     Transaction[]        @relation("SentTransactions")
-  receivedTransactions Transaction[]        @relation("ReceivedTransactions")
-  isDelete             Boolean              @default(false)
-
-  @@unique([businessId, name])
-  @@index([businessId])
-  @@index([partyId])
-  @@map("financialAccount")
-}
-
-model Party {
-  id                String             @id @default(cuid())
-  name              String
-  contactNo         String?
-  profileUrl        String?
-  businessId        String
-  isActive          Boolean            @default(true)
-  createdAt         DateTime           @default(now())
-  updatedAt         DateTime           @default(now()) @updatedAt
-  financialAccounts FinancialAccount[]
-  business          Business           @relation(fields: [businessId], references: [id])
-  transactions      Transaction[]
-  isDelete          Boolean            @default(false)
-
-  @@unique([businessId, name])
-  @@index([businessId])
-  @@map("party")
-}
-
-model Transaction {
-  id            String           @id @default(cuid())
-  businessId    String
-  amount        Decimal          @db.Decimal(12, 2)
-  date          DateTime         @default(now())
-  description   String?
-  userId        String
-  createdAt     DateTime         @default(now())
-  updatedAt     DateTime         @default(now()) @updatedAt
-  fromAccountId String
-  toAccountId   String
-  partyId       String?
-  business      Business         @relation(fields: [businessId], references: [id], onDelete: Cascade)
-  fromAccount   FinancialAccount @relation("SentTransactions", fields: [fromAccountId], references: [id])
-  party         Party?           @relation(fields: [partyId], references: [id])
-  toAccount     FinancialAccount @relation("ReceivedTransactions", fields: [toAccountId], references: [id])
-  user          User             @relation(fields: [userId], references: [id])
-  isDelete      Boolean          @default(false)
-
-  @@index([businessId])
-  @@index([businessId, date])
-  @@index([businessId, fromAccountId])
-  @@index([businessId, toAccountId])
-  @@index([fromAccountId, date])
-  @@index([toAccountId, date])
-  @@index([userId])
-  @@index([partyId, date])
-  @@map("transaction")
-}
-
-enum Currency {
-  INR
-  USD
-  EUR
-}
-
-enum ThemeMode {
-  AUTO
-  LIGHT
-  DARK
-}
-
-enum FinancialAccountType {
-  MONEY
-  PARTY
-  CATEGORY
-}
-
-enum MoneyType {
-  CASH
-  ONLINE
-  CHEQUE
-}
-
-enum PartyType {
-  CUSTOMER
-  SUPPLIER
-  OTHER
-  EMPLOYEE
-}
-
-enum CategoryType {
-  INCOME
-  EXPENSE
-  ASSET
-  EQUITY
-  ADJUSTMENT
-}
-
 model AppConfig {
   id                  String   @id @default("singleton")
-  appName             String   @default("Settlr")
-  appDescription      String   @default("Settlr for managing personal finance")
+  appName             String   @default("App Name")
+  appDescription      String   @default("This is the application description")
   smtpHost            String?
   smtpPort            Int?     @default(587)
   smtpUser            String?

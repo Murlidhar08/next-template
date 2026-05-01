@@ -8,12 +8,9 @@ import { AnimatePresence, motion } from "framer-motion";
 import {
   ChevronLeft,
   ChevronRight,
-  LandmarkIcon,
   LayoutDashboard,
   Settings,
-  User2Icon,
-  UserRoundCog,
-  Wallet,
+  UserRoundCog
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -37,11 +34,8 @@ const Sidebar = () => {
 
   const navItems: NavItem[] = [
     { label: t("nav.dashboard", language), icon: <LayoutDashboard size={20} />, href: "/dashboard" },
-    { label: t("nav.accounts", language), icon: <LandmarkIcon size={20} />, href: "/accounts" },
-    { label: t("nav.parties", language), icon: <User2Icon size={20} />, href: "/parties" },
-    { label: t("nav.cashbook", language), icon: <Wallet size={20} />, href: "/cashbook" },
-    ...(isAdmin ? [{ label: t("nav.admin", language), icon: <UserRoundCog size={20} />, href: "/admin" }] : []),
     { label: t("nav.settings", language), icon: <Settings size={20} />, href: "/settings" },
+    ...(isAdmin ? [{ label: t("nav.admin", language), icon: <UserRoundCog size={20} />, href: "/admin" }] : []),
   ];
 
   return (
