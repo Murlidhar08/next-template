@@ -2,7 +2,7 @@
 
 // Packages
 import { AnimatePresence, motion } from "framer-motion";
-import { Eye, EyeOff, Mail } from "lucide-react";
+import { Eye, EyeOff, Mail, User2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -139,7 +139,7 @@ export default function LoginForm({ providers }: LoginFormProps) {
         initial="hidden"
         animate="visible"
         variants={containerVariants}
-        className="flex flex-col justify-between w-full lg:w-1/2 px-6 sm:px-12 lg:px-16 py-8 relative z-10 h-full overflow-y-auto scrollbar-none bg-background/50 backdrop-blur-sm border-r border-border/50"
+        className="flex flex-col justify-between w-full lg:w-1/2 px-6 sm:px-12 lg:px-6 py-8 relative z-10 h-full overflow-y-auto scrollbar-none bg-background/50 backdrop-blur-sm border-r border-border/50"
       >
         {/* LOGO + BRAND */}
         <motion.div
@@ -180,8 +180,8 @@ export default function LoginForm({ providers }: LoginFormProps) {
 
         {/* CENTER FORM AREA */}
         <div className="flex flex-col justify-center max-w-sm mx-auto w-full py-8 lg:py-0">
-          <motion.div variants={itemVariants as any} className="mb-8">
-            <h2 className="text-4xl font-bold tracking-tight mb-3">
+          <motion.div variants={itemVariants as any} className="mb-6">
+            <h2 className="text-3xl font-bold tracking-tight mb-3">
               Welcome back
             </h2>
             <p className="text-muted-foreground text-lg font-medium">
@@ -206,39 +206,42 @@ export default function LoginForm({ providers }: LoginFormProps) {
 
             <div className="space-y-4">
               {/* Email */}
-              <div className="space-y-2">
-                <label className="text-sm font-semibold ml-1 text-foreground/70">Email</label>
+              <div className="space-y-1.5">
+                <label className="text-sm font-semibold ml-1 text-foreground/70">Email Address</label>
                 <div className="relative group">
                   <Input
                     type="email"
+                    tabIndex={1}
                     placeholder="name@company.com"
-                    className="h-14 rounded-2xl pl-4 pr-12 transition-all duration-300 bg-muted/40 border-border/50 focus:bg-background focus:ring-4 focus:ring-primary/10 focus:border-primary shadow-sm"
+                    className="h-13 rounded-2xl pl-4 pr-12 transition-all duration-300 bg-muted/40 border-border/50 focus:bg-background focus:ring-4 focus:ring-primary/10 focus:border-primary shadow-sm"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
+                    autoFocus={true}
                   />
                   <Mail className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground group-focus-within:text-primary transition-colors w-5 h-5" />
                 </div>
               </div>
 
               {/* Password */}
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 <div className="flex justify-between items-center ml-1">
                   <label className="text-sm font-semibold text-foreground/70">Password</label>
                   <Link
                     href="/forgot-password"
                     className="text-xs font-bold text-primary hover:text-primary/80 transition-colors"
                   >
-                    Forgot?
+                    Forgot Password?
                   </Link>
                 </div>
                 <div className="relative group">
                   <Input
                     type={showPassword ? "text" : "password"}
                     placeholder="••••••••"
-                    className="h-14 rounded-2xl pl-4 pr-12 transition-all duration-300 bg-muted/40 border-border/50 focus:bg-background focus:ring-4 focus:ring-primary/10 focus:border-primary shadow-sm"
+                    className="h-13 rounded-2xl pl-4 pr-12 transition-all duration-300 bg-muted/40 border-border/50 focus:bg-background focus:ring-4 focus:ring-primary/10 focus:border-primary shadow-sm"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    tabIndex={2}
                     required
                   />
                   <button
@@ -254,6 +257,7 @@ export default function LoginForm({ providers }: LoginFormProps) {
 
             <Button
               type="submit"
+              tabIndex={3}
               disabled={loading || googleLoading || discordLoading}
               className="relative rounded-2xl h-14 w-full text-lg font-bold shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all duration-300 active:scale-[0.98] mt-2"
             >
@@ -271,13 +275,13 @@ export default function LoginForm({ providers }: LoginFormProps) {
 
           {hasSocialLogin && (
             <>
-              <motion.div variants={itemVariants as any} className="relative my-8">
+              <motion.div variants={itemVariants as any} className="relative my-10">
                 <div className="absolute inset-0 flex items-center">
                   <div className="w-full border-t border-border/50"></div>
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
                   <span className="bg-background/50 backdrop-blur-sm px-4 text-muted-foreground font-bold tracking-widest">
-                    Or join with
+                    Or continue with
                   </span>
                 </div>
               </motion.div>
@@ -287,6 +291,7 @@ export default function LoginForm({ providers }: LoginFormProps) {
                   <Button
                     onClick={handleGoogle}
                     variant="outline"
+                    tabIndex={4}
                     disabled={googleLoading || loading || discordLoading}
                     className="relative rounded-2xl h-14 px-6 flex items-center justify-center gap-3 hover:bg-muted/50 border-border/50 transition-all duration-300 active:scale-[0.98] group/google shadow-sm"
                   >
@@ -306,6 +311,7 @@ export default function LoginForm({ providers }: LoginFormProps) {
                   <Button
                     onClick={handleDiscordLogin}
                     variant="outline"
+                    tabIndex={5}
                     disabled={discordLoading || loading || googleLoading}
                     className="relative rounded-2xl h-14 px-6 flex items-center justify-center gap-3 hover:bg-muted/50 border-border/50 transition-all duration-300 active:scale-[0.98] group/discord shadow-sm"
                   >
@@ -329,7 +335,7 @@ export default function LoginForm({ providers }: LoginFormProps) {
         <motion.div variants={itemVariants as any} className="mt-8 pt-8 border-t border-border/50">
           <p className="text-center text-muted-foreground">
             Don&apos;t have an account?{" "}
-            <Link href="/signup" className="font-bold text-primary hover:text-primary/80 transition-colors">
+            <Link tabIndex={6} href="/signup" className="font-bold text-primary hover:text-primary/80 transition-colors">
               Get Started
             </Link>
           </p>
@@ -341,7 +347,7 @@ export default function LoginForm({ providers }: LoginFormProps) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
-        className="hidden lg:flex w-1/2 p-12 items-center justify-center bg-linear-to-br from-primary via-primary/90 to-primary/80 relative overflow-hidden"
+        className="hidden lg:flex flex-1 p-12 items-center justify-center bg-linear-to-br from-primary via-primary/90 to-primary/80 relative overflow-hidden"
       >
         {/* Animated Background Elements */}
         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-white/10 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3 animate-pulse" />
@@ -351,51 +357,48 @@ export default function LoginForm({ providers }: LoginFormProps) {
         <div className="absolute inset-0 opacity-10 [mask-image:radial-gradient(ellipse_at_center,black,transparent)]"
           style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
 
-        <div className="relative z-10 w-full max-w-2xl">
-          <div className="grid grid-cols-1 gap-12">
-            <div className="text-center text-white space-y-6">
-              <motion.div
-                animate={{
-                  y: [0, -10, 0],
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                className="w-32 h-32 bg-white/10 backdrop-blur-2xl rounded-[2.5rem] flex items-center justify-center border border-white/20 shadow-2xl mx-auto mb-12 relative group"
-              >
-                <div className="absolute inset-0 bg-white/20 rounded-[2.5rem] blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <Image
-                  src="/images/logo/dark_logo.svg"
-                  alt={envClient.NEXT_PUBLIC_APP_NAME}
-                  loading="eager"
-                  width={80}
-                  height={80}
-                  className="relative z-10 group-hover:scale-110 transition-transform duration-500"
-                />
-              </motion.div>
+        <div className="relative z-10 w-full max-w-2xl text-center text-white space-y-12">
+          <motion.div
+            animate={{
+              y: [0, -10, 0],
+            }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="w-32 h-32 bg-white/10 backdrop-blur-2xl rounded-[2.5rem] flex items-center justify-center border border-white/20 shadow-2xl mx-auto relative group"
+          >
+            <div className="absolute inset-0 bg-white/20 rounded-[2.5rem] blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <Image
+              src="/images/logo/dark_logo.svg"
+              alt={envClient.NEXT_PUBLIC_APP_NAME}
+              loading="eager"
+              width={80}
+              height={80}
+              className="relative z-10 group-hover:scale-110 transition-transform duration-500"
+            />
+          </motion.div>
 
-              <motion.h2
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.3 }}
-                className="text-5xl font-black tracking-tight leading-tight"
-              >
-                Master your <br />
-                <span className="text-transparent bg-clip-text bg-linear-to-r from-white to-white/60">financial destiny.</span>
-              </motion.h2>
+          <div className="space-y-6">
+            <motion.h2
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.3 }}
+              className="text-[clamp(2rem,5vw,3.5rem)] font-black tracking-tight leading-tight"
+            >
+              Master your <br />
+              <span className="text-transparent bg-clip-text bg-linear-to-r from-white to-white/60">financial destiny.</span>
+            </motion.h2>
 
-              <motion.p
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.5 }}
-                className="text-white/80 text-xl font-medium max-w-lg mx-auto leading-relaxed"
-              >
-                Experience the next generation of finance management with real-time insights and enterprise security.
-              </motion.p>
-            </div>
-
+            <motion.p
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              className="text-white/80 text-xl font-medium max-w-lg mx-auto leading-relaxed"
+            >
+              Experience the next generation of finance management with real-time insights and enterprise security.
+            </motion.p>
           </div>
         </div>
       </motion.div >

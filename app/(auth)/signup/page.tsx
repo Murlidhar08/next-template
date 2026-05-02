@@ -108,7 +108,7 @@ export default function SignupPage() {
         initial="hidden"
         animate="visible"
         variants={containerVariants}
-        className="flex flex-col justify-between w-full lg:w-[45%] xl:w-[40%] px-6 sm:px-12 lg:px-16 xl:px-24 py-8 relative z-10 h-full overflow-y-auto scrollbar-none bg-background/50 backdrop-blur-sm border-r border-border/50"
+        className="flex flex-col justify-between w-full lg:w-1/2 px-6 sm:px-12 lg:px-16 xl:px-24 py-8 relative z-10 h-full overflow-y-auto scrollbar-none bg-background/50 backdrop-blur-sm border-r border-border/50"
       >
         {/* LOGO + BRAND */}
         <motion.div
@@ -153,8 +153,8 @@ export default function SignupPage() {
             <h2 className="text-4xl font-bold tracking-tight mb-3">
               Create account
             </h2>
-            <p className="text-muted-foreground text-lg font-medium">
-              Start your financial journey today
+            <p className="text-muted-foreground text-lg font-medium leading-relaxed">
+              Start your financial journey with {envClient.NEXT_PUBLIC_APP_NAME} today.
             </p>
           </motion.div>
 
@@ -288,61 +288,56 @@ export default function SignupPage() {
         {/* Animated Background Elements */}
         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-white/10 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3 animate-pulse" />
         <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-black/10 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/4" />
-        
+
         {/* Abstract Grid Pattern */}
-        <div className="absolute inset-0 opacity-10 [mask-image:radial-gradient(ellipse_at_center,black,transparent)]" 
-             style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
+        <div className="absolute inset-0 opacity-10 [mask-image:radial-gradient(ellipse_at_center,black,transparent)]"
+          style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
 
-        <div className="relative z-10 w-full max-w-2xl">
-          <div className="grid grid-cols-1 gap-12">
-            <div className="text-center text-white space-y-6">
-              <motion.div
-                animate={{
-                  y: [0, -10, 0],
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                className="w-32 h-32 bg-white/10 backdrop-blur-2xl rounded-[2.5rem] flex items-center justify-center border border-white/20 shadow-2xl mx-auto mb-12 relative group"
-              >
-                <div className="absolute inset-0 bg-white/20 rounded-[2.5rem] blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <Image
-                  src="/images/logo/dark_logo.svg"
-                  alt={envClient.NEXT_PUBLIC_APP_NAME}
-                  loading="eager"
-                  width={80}
-                  height={80}
-                  className="relative z-10 group-hover:scale-110 transition-transform duration-500"
-                />
-              </motion.div>
-              
-              <motion.h2
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.3 }}
-                className="text-5xl font-black tracking-tight leading-tight"
-              >
-                The future of <br />
-                <span className="text-transparent bg-clip-text bg-linear-to-r from-white to-white/60">wealth management.</span>
-              </motion.h2>
-              
-              <motion.p
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.5 }}
-                className="text-white/80 text-xl font-medium max-w-lg mx-auto leading-relaxed"
-              >
-                Join thousands of professionals using {envClient.NEXT_PUBLIC_APP_NAME} to streamline their financial operations.
-              </motion.p>
-            </div>
+        <div className="relative z-10 w-full max-w-2xl text-center text-white space-y-12">
+          <motion.div
+            animate={{
+              y: [0, -10, 0],
+            }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="w-32 h-32 bg-white/10 backdrop-blur-2xl rounded-[2.5rem] flex items-center justify-center border border-white/20 shadow-2xl mx-auto relative group"
+          >
+            <div className="absolute inset-0 bg-white/20 rounded-[2.5rem] blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <Image
+              src="/images/logo/dark_logo.svg"
+              alt={envClient.NEXT_PUBLIC_APP_NAME}
+              loading="eager"
+              width={80}
+              height={80}
+              className="relative z-10 group-hover:scale-110 transition-transform duration-500"
+            />
+          </motion.div>
 
-            </div>
+          <div className="space-y-6">
+            <motion.h2
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.3 }}
+              className="text-5xl font-black tracking-tight leading-tight"
+            >
+              The future of <br />
+              <span className="text-transparent bg-clip-text bg-linear-to-r from-white to-white/60">wealth management.</span>
+            </motion.h2>
+
+            <motion.p
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              className="text-white/80 text-xl font-medium max-w-lg mx-auto leading-relaxed"
+            >
+              Join thousands of professionals using {envClient.NEXT_PUBLIC_APP_NAME} to streamline their financial operations.
+            </motion.p>
           </div>
         </div>
-      </motion.div>
-    </div>
+      </motion.div >
+    </div >
   );
-}
 }

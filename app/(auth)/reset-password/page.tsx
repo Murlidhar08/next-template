@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth/auth-client";
 import { envClient } from "@/lib/env.client";
+import Link from "next/link";
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -49,6 +50,9 @@ function ResetPasswordForm() {
     const tokenValue = searchParams.get("token");
     if (!tokenValue) {
       setError("Invalid or expired password reset token.");
+      setTimeout(() => {
+        router.push("/login");
+      }, 1000);
     } else {
       setToken(tokenValue);
     }
@@ -111,17 +115,8 @@ function ResetPasswordForm() {
         initial="hidden"
         animate="visible"
         variants={containerVariants}
-        className="flex flex-col justify-between w-full lg:w-[45%] xl:w-[40%] px-6 sm:px-12 lg:px-16 xl:px-24 py-8 relative z-10 h-full overflow-y-auto scrollbar-none bg-background/50 backdrop-blur-sm border-r border-border/50"
+        className="flex flex-col justify-between w-full lg:w-1/2 px-6 sm:px-12 lg:px-16 xl:px-24 py-8 relative z-10 h-full overflow-y-auto scrollbar-none bg-background/50 backdrop-blur-sm border-r border-border/50"
       >
-        {/* Back Button */}
-        <motion.button
-          variants={itemVariants}
-          onClick={() => router.push("/login")}
-          className="flex items-center gap-2 text-sm font-bold text-muted-foreground hover:text-primary transition-colors mb-8 group w-fit"
-        >
-          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> 
-          Back
-        </motion.button>
 
         {/* LOGO + BRAND */}
         <motion.div
@@ -259,13 +254,22 @@ function ResetPasswordForm() {
                 </div>
               ) : "Reset Password"}
             </Button>
+
+            <div className="text-center">
+              <Link
+                href="/login"
+                className="text-primary font-bold hover:text-primary/80 transition-colors"
+              >
+                Back to Sign In
+              </Link>
+            </div>
           </motion.form>
         </div>
 
         {/* BOTTOM DECORATION / FOOTER */}
         <motion.div variants={itemVariants as any} className="mt-8 pt-8 border-t border-border/50">
           <p className="text-center text-muted-foreground text-sm">
-            Need help? <Link href="/contact" className="font-bold text-primary hover:text-primary/80 transition-colors">Contact Support</Link>
+            Need help? <a href="mailto:support@example.app" className="font-bold text-primary hover:text-primary/80 transition-colors">Contact Support</a>
           </p>
         </motion.div>
       </motion.div>
@@ -280,10 +284,10 @@ function ResetPasswordForm() {
         {/* Animated Background Elements */}
         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-white/10 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3 animate-pulse" />
         <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-black/10 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/4" />
-        
+
         {/* Abstract Grid Pattern */}
-        <div className="absolute inset-0 opacity-10 [mask-image:radial-gradient(ellipse_at_center,black,transparent)]" 
-             style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
+        <div className="absolute inset-0 opacity-10 [mask-image:radial-gradient(ellipse_at_center,black,transparent)]"
+          style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
 
         <div className="relative z-10 w-full max-w-2xl text-center text-white space-y-12">
           <motion.div
@@ -307,7 +311,7 @@ function ResetPasswordForm() {
               className="relative z-10 group-hover:scale-110 transition-transform duration-500"
             />
           </motion.div>
-          
+
           <div className="space-y-6">
             <motion.h2
               initial={{ y: 20, opacity: 0 }}
@@ -318,7 +322,7 @@ function ResetPasswordForm() {
               Account Security <br />
               <span className="text-transparent bg-clip-text bg-linear-to-r from-white to-white/60">Restored.</span>
             </motion.h2>
-            
+
             <motion.p
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -337,12 +341,20 @@ function ResetPasswordForm() {
 export default function ResetPasswordPage() {
   return (
     <Suspense fallback={
-      <div className="h-screen flex items-center justify-center bg-background">
-        <div className="w-8 h-8 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
+      <div className="h-screen w-full flex flex-col items-center justify-center bg-background p-6">
+        <div className="relative w-16 h-16 mb-8">
+          <div className="absolute inset-0 bg-primary/20 rounded-2xl blur-xl animate-pulse" />
+          <div className="relative z-10 w-full h-full bg-background rounded-2xl border border-border/50 flex items-center justify-center shadow-sm">
+            <div className="w-8 h-8 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
+          </div>
+        </div>
+        <div className="space-y-2 text-center">
+          <h2 className="text-xl font-bold tracking-tight">Securing Connection</h2>
+          <p className="text-sm text-muted-foreground animate-pulse">Initializing reset sequence...</p>
+        </div>
       </div>
     }>
       <ResetPasswordForm />
     </Suspense>
   );
 }
-

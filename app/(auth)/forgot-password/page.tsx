@@ -77,17 +77,8 @@ export default function ForgotPasswordPage() {
         initial="hidden"
         animate="visible"
         variants={containerVariants}
-        className="flex flex-col justify-between w-full lg:w-1/2 px-6 sm:px-12 py-8 relative z-10 h-full overflow-y-auto scrollbar-none bg-background/50 backdrop-blur-sm border-r border-border/50"
+        className="flex flex-col justify-between w-full lg:w-1/2 px-6 sm:px-12 lg:px-16 xl:px-24 py-8 relative z-10 h-full overflow-y-auto scrollbar-none bg-background/50 backdrop-blur-sm border-r border-border/50"
       >
-        {/* Back Button */}
-        <motion.button
-          variants={itemVariants}
-          onClick={() => router.back()}
-          className="flex items-center gap-2 text-sm font-bold text-muted-foreground hover:text-primary transition-colors mb-8 group w-fit"
-        >
-          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-          Back
-        </motion.button>
 
         {/* LOGO + BRAND */}
         <motion.div
@@ -141,8 +132,8 @@ export default function ForgotPasswordPage() {
                   <h2 className="text-4xl font-bold tracking-tight mb-3">
                     Forgot Password?
                   </h2>
-                  <p className="text-muted-foreground text-lg font-medium">
-                    Enter your email to receive a reset link
+                  <p className="text-muted-foreground text-lg font-medium leading-relaxed">
+                    Enter your email to receive a secure password recovery link.
                   </p>
                 </motion.div>
 
@@ -212,9 +203,9 @@ export default function ForgotPasswordPage() {
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     transition={{ type: "spring", stiffness: 200, damping: 12 }}
-                    className="w-24 h-24 rounded-[2rem] bg-primary/10 flex items-center justify-center shadow-inner border border-primary/20"
+                    className="w-24 h-24 rounded-[2.5rem] bg-emerald-500/10 flex items-center justify-center shadow-inner border border-emerald-500/20"
                   >
-                    <ShieldCheck className="w-12 h-12 text-primary" />
+                    <ShieldCheck className="w-12 h-12 text-emerald-600 dark:text-emerald-400" />
                   </motion.div>
                 </div>
 
@@ -240,7 +231,7 @@ export default function ForgotPasswordPage() {
         {/* BOTTOM DECORATION / FOOTER */}
         <motion.div variants={itemVariants as any} className="mt-8 pt-8 border-t border-border/50">
           <p className="text-center text-muted-foreground text-sm">
-            Need help? <Link href="/contact" className="font-bold text-primary hover:text-primary/80 transition-colors">Contact Support</Link>
+            Need help? <a href="mailto:support@example.app" className="font-bold text-primary hover:text-primary/80 transition-colors">Contact Support</a>
           </p>
         </motion.div>
       </motion.div>
