@@ -10,7 +10,6 @@ export const getUserConfig = async () => {
   return session.session.userSettings;
 };
 
-
 export function getDefaultConfig() {
   return {
     currency: Currency.INR,

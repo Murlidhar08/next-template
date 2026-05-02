@@ -2,7 +2,7 @@ import zod from "zod";
 
 const envSchema = zod.object({
   // Application
-  NODE_ENV: zod.string().nonempty(),
+  NODE_ENV: zod.string().default("production"),
   NEXT_PUBLIC_APP_NAME: zod.string().nonempty(),
   NEXT_PUBLIC_APP_DESCRIPTION: zod.string().nonempty(),
 
