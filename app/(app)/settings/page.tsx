@@ -213,6 +213,26 @@ export default function SettingsPage() {
               </Select>
             </Row>
 
+            <Row icon={Languages} label={t("settings.language", language)}>
+              <Select
+                value={language}
+                onValueChange={(value) => {
+                  if (!value) return
+                  setLanguage(value)
+                  void upsertUserSettings({ language: value })
+                  toast.success(`Language updated`)
+                }}
+              >
+                <SelectTrigger className="w-[140px] h-10 rounded-xl border-2 font-bold focus:ring-primary/20">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="rounded-2xl shadow-2xl">
+                  <SelectItem value="en" className="rounded-lg font-medium">{t("languages.en", language)}</SelectItem>
+                  <SelectItem value="hi" className="rounded-lg font-medium">{t("languages.hi", language)}</SelectItem>
+                </SelectContent>
+              </Select>
+            </Row>
+
             {isDebug && (
               <Row icon={Terminal} label={t("settings.developer_mode", language)}>
                 <Button
@@ -233,26 +253,6 @@ export default function SettingsPage() {
                 </Button>
               </Row>
             )}
-
-            <Row icon={Languages} label={t("settings.language", language)}>
-              <Select
-                value={language}
-                onValueChange={(value) => {
-                  if (!value) return
-                  setLanguage(value)
-                  void upsertUserSettings({ language: value })
-                  toast.success(`Language updated`)
-                }}
-              >
-                <SelectTrigger className="w-[140px] h-10 rounded-xl border-2 font-bold focus:ring-primary/20">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="rounded-2xl shadow-2xl">
-                  <SelectItem value="en" className="rounded-lg font-medium">{t("languages.en", language)}</SelectItem>
-                  <SelectItem value="hi" className="rounded-lg font-medium">{t("languages.hi", language)}</SelectItem>
-                </SelectContent>
-              </Select>
-            </Row>
           </Section>
         </motion.div>
 
