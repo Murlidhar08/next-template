@@ -22,9 +22,9 @@ export default async function AuthLayout({ children }: { children: React.ReactNo
       <div className="absolute top-4 right-4 z-50">
         <ThemeToggle />
       </div>
-      <div className="min-h-screen flex items-center justify-center">
+      <main className="w-full h-screen overflow-hidden">
         {children}
-      </div>
+      </main>
       <BuildVersion />
     </div>
   );
