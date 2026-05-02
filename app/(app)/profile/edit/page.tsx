@@ -9,13 +9,15 @@ import { toast } from 'sonner'
 
 import { BackHeader } from '@/components/back-header'
 import { FooterButtons } from '@/components/footer-buttons'
+import { useUserConfig } from '@/components/providers/user-config-provider'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { LoadingSwap } from '@/components/ui/loading-swap'
 import { Skeleton } from '@/components/ui/skeleton'
 import { authClient } from '@/lib/auth/auth-client'
-import { getInitials } from '@/utility/party'
+import { t } from '@/lib/languages/i18n'
+import { getInitials } from '@/utility/commonFunction'
 import { useCurrentUser } from '@/tanstacks/user'
 
 type ProfileFormValues = {
@@ -42,6 +44,7 @@ const itemVariants = {
 export default function EditProfilePage() {
   const router = useRouter()
   const { data: user, isLoading } = useCurrentUser()
+  const { language } = useUserConfig()
 
   const { register, handleSubmit, formState: { isSubmitting }, reset } = useForm<ProfileFormValues>({
     defaultValues: {
@@ -89,25 +92,25 @@ export default function EditProfilePage() {
       const emailResult = res[1] ?? { error: false }
 
       if (updateUserResult?.error) {
-        toast.error(updateUserResult.error.message || 'Failed to update profile')
+        toast.error(updateUserResult.error.message || t("profile_edit.failed_to_update_profile", language))
         return
       }
 
       if (emailResult?.error) {
-        toast.error(emailResult.error.message || 'Failed to change email')
+        toast.error(emailResult.error.message || t("profile_edit.failed_to_change_email", language))
         return
       }
 
       if (data.email !== user?.email) {
-        toast.success('Verify your new email address to complete the change.')
+        toast.success(t("profile_edit.verify_email_notice", language))
       } else {
-        toast.success('Profile updated successfully')
+        toast.success(t("profile_edit.profile_updated_successfully", language))
       }
 
       router.refresh()
       router.push('/profile' as any)
     } catch (error) {
-      toast.error('Something went wrong');
+      toast.error(t("profile_edit.something_went_wrong", language));
       console.error('Something went wrong', error);
     }
   }
@@ -119,7 +122,7 @@ export default function EditProfilePage() {
       variants={containerVariants}
       className="relative w-full bg-background pb-34"
     >
-      <BackHeader title='Edit Profile' backUrl={'/profile' as any} />
+      <BackHeader title={t("profile_edit.title", language)} backUrl={'/profile' as any} />
 
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* Avatar Section */}
@@ -141,34 +144,34 @@ export default function EditProfilePage() {
             </motion.button>
             <div className="absolute inset-0 rounded-full bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-2xl -z-10" />
           </div>
-          <p className="mt-4 text-xs font-black uppercase tracking-[0.2em] text-primary/60">Upload New Avatar</p>
+          <p className="mt-4 text-xs font-black uppercase tracking-[0.2em] text-primary/60">{t("profile_edit.upload_new_avatar", language)}</p>
         </motion.section>
 
         {/* Form Fields */}
         <motion.section variants={itemVariants} className="mx-auto flex w-full max-w-lg flex-col gap-6 px-6">
           <Field
-            label="What's your name?"
+            label={t("profile_edit.name_label", language)}
             icon={User}
-            registration={register('name', { required: "Name is required" })}
+            registration={register('name', { required: t("profile_edit.name_required", language) })}
           />
 
           <Field
-            label="Phone Number"
+            label={t("profile.phone_number", language)}
             icon={Phone}
             registration={register('contactNo')}
-            placeholder="+1 (555) 000-0000"
+            placeholder={t("profile_edit.phone_placeholder", language)}
           />
 
           <Field
-            label="Email Address"
+            label={t("profile.email_address", language)}
             icon={Mail}
             type="email"
             disabled={true}
-            registration={register('email', { required: "Email is required" })}
+            registration={register('email', { required: t("profile_edit.email_required", language) })}
           />
           <div className="flex items-center gap-2 p-4 rounded-2xl bg-muted/30 border border-dashed border-muted-foreground/20">
             <CheckCircle2 size={16} className="text-muted-foreground" />
-            <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">Email changes require verification for your security.</p>
+            <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">{t("profile_edit.email_verification_notice", language)}</p>
           </div>
         </motion.section>
 
@@ -181,7 +184,7 @@ export default function EditProfilePage() {
             <LoadingSwap isLoading={isSubmitting}>
               <div className="flex items-center gap-2">
                 <Edit3 size={18} />
-                <span className="hidden md:block">Update My Profile</span>
+                <span className="hidden md:block">{t("profile_edit.update_profile_button", language)}</span>
               </div>
             </LoadingSwap>
           </Button>
@@ -192,9 +195,10 @@ export default function EditProfilePage() {
 }
 
 function EditProfileSkeleton() {
+  const { language } = useUserConfig()
   return (
     <div className="min-h-screen bg-background">
-      <BackHeader title="Edit Profile" />
+      <BackHeader title={t("profile_edit.title", language)} />
       <div className="flex flex-col items-center py-10 space-y-4">
         <Skeleton className="h-32 w-32 rounded-full" />
         <Skeleton className="h-4 w-32" />

@@ -3,6 +3,8 @@
 import { getCredientialAccounts } from "@/actions/user-settings.actions";
 import { BackHeader } from "@/components/back-header";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useUserConfig } from "@/components/providers/user-config-provider";
+import { t } from "@/lib/languages/i18n";
 import { auth } from "@/lib/auth/auth";
 import { useSession } from "@/lib/auth/auth-client";
 import { motion } from "framer-motion";
@@ -15,6 +17,7 @@ type Account = Awaited<ReturnType<typeof auth.api.listUserAccounts>>[number];
 export default function LinkAccountPage() {
     const router = useRouter();
     const { data: session, isPending } = useSession();
+    const { language } = useUserConfig();
     const [currAccount, setCurrAccount] = useState<Account[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -47,7 +50,7 @@ export default function LinkAccountPage() {
     return (
         <div className="min-h-screen bg-background pb-20">
             <BackHeader
-                title="Linked Accounts"
+                title={t("linked_accounts.title", language)}
                 backUrl="/settings"
             />
 
@@ -64,9 +67,10 @@ export default function LinkAccountPage() {
 }
 
 function LinkAccountSkeleton() {
+    const { language } = useUserConfig();
     return (
         <div className="min-h-screen bg-background">
-            <BackHeader title="Linked Accounts" />
+            <BackHeader title={t("linked_accounts.title", language)} />
             <div className="mx-auto max-w-lg p-6 mt-6 space-y-8">
                 <div className="space-y-4">
                     <Skeleton className="h-5 w-32" />

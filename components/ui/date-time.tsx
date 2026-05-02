@@ -1,7 +1,7 @@
 "use client"
 
 import { useUserConfig } from "@/components/providers/user-config-provider"
-import { formatDate, formatTime } from "@/utility/transaction"
+import { formatDate, formatTime } from "@/utility/commonFunction"
 import { cn } from "@/lib/utils"
 
 interface DateTimeProps {
@@ -15,7 +15,7 @@ interface DateTimeProps {
  */
 export function FormattedDate({ date, className }: DateTimeProps) {
   const { dateFormat } = useUserConfig()
-  
+
   return (
     <span className={cn("tabular-nums", className)} suppressHydrationWarning>
       {formatDate(date, dateFormat)}
@@ -29,7 +29,7 @@ export function FormattedDate({ date, className }: DateTimeProps) {
  */
 export function FormattedTime({ date, className }: DateTimeProps) {
   const { timeFormat } = useUserConfig()
-  
+
   return (
     <span className={cn("tabular-nums", className)} suppressHydrationWarning>
       {formatTime(date, timeFormat)}
@@ -42,7 +42,7 @@ export function FormattedTime({ date, className }: DateTimeProps) {
  */
 export function FormattedDateTime({ date, className, separator = " • " }: DateTimeProps & { separator?: string }) {
   const { dateFormat, timeFormat } = useUserConfig()
-  
+
   return (
     <span className={cn("tabular-nums", className)} suppressHydrationWarning>
       {formatDate(date, dateFormat)}{separator}{formatTime(date, timeFormat)}

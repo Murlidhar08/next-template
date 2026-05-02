@@ -9,7 +9,7 @@ interface FooterButtonsProp {
 
 const FooterButtons = ({ children }: FooterButtonsProp) => {
   return (
-    <div className="fixed bottom-24 right-5 lg:bottom-8 lg:right-10 z-50">
+    <div className="fixed bottom-16 right-5 lg:bottom-2 lg:right-10 z-50">
       <motion.div
         initial={{ opacity: 0, scale: 0.9, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}

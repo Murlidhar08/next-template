@@ -12,23 +12,26 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 import { FooterButtons } from "@/components/footer-buttons";
+import { useUserConfig } from "@/components/providers/user-config-provider";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { signOut } from "@/lib/auth/auth-client";
+import { t } from "@/lib/languages/i18n";
 import { useCurrentUser } from "@/tanstacks/user";
-import { getInitials } from "@/utility/party";
+import { getInitials } from "@/utility/commonFunction";
 
 export default function ProfilePage() {
     const router = useRouter();
     const { data: user, isLoading } = useCurrentUser();
+    const { language } = useUserConfig();
 
     const handleLogout = async () => {
         try {
             await signOut();
-            toast.success("Logged out successfully");
+            toast.success(t("profile.logged_out_successfully", language));
             router.replace("/login");
         } catch (error) {
-            toast.error("Failed to logout");
+            toast.error(t("profile.failed_to_logout", language));
         }
     };
 
@@ -87,18 +90,18 @@ export default function ProfilePage() {
                 <motion.div variants={itemVariants} className="space-y-4">
                     <DetailRow
                         icon={User}
-                        label="Full Name"
-                        value={user?.name || "Not set"}
+                        label={t("profile.full_name", language)}
+                        value={user?.name || t("profile.not_set", language)}
                     />
                     <DetailRow
                         icon={Mail}
-                        label="Email Address"
-                        value={user?.email || "Not set"}
+                        label={t("profile.email_address", language)}
+                        value={user?.email || t("profile.not_set", language)}
                     />
                     <DetailRow
                         icon={Phone}
-                        label="Phone Number"
-                        value={user?.contactNo || "Not set"}
+                        label={t("profile.phone_number", language)}
+                        value={user?.contactNo || t("profile.not_set", language)}
                     />
                 </motion.div>
 
@@ -110,7 +113,7 @@ export default function ProfilePage() {
                         className="h-14 w-14 md:w-auto md:px-12 rounded-full md:gap-3 font-semibold uppercase bg-primary text-white shadow-lg shadow-primary/30 transition-all hover:bg-primary/90 hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 p-0 md:py-2"
                     >
                         <Edit3 size={18} />
-                        <span className="hidden md:block">Edit Profile</span>
+                        <span className="hidden md:block">{t("profile.edit_profile", language)}</span>
                     </Button>
 
                     {/* Logout */}
@@ -120,7 +123,7 @@ export default function ProfilePage() {
                         className="h-14 w-14 md:w-auto md:px-12 rounded-full md:gap-3 font-semibold uppercase text-rose-600 shadow-lg shadow-rose-600/30 hover:text-white hover:bg-rose-900 hover:shadow-xl p-0 md:py-2"
                     >
                         <LogOut size={18} />
-                        <span className="hidden md:block">Logout</span>
+                        <span className="hidden md:block">{t("profile.logout", language)}</span>
                     </Button>
                 </FooterButtons>
             </motion.div>

@@ -20,6 +20,7 @@ import {
   LogOut,
   Moon,
   PaintbrushIcon,
+  Plus,
   Skull,
   Sun,
   Terminal
@@ -264,14 +265,14 @@ export default function SettingsPage() {
                   <div className="h-10 w-10 rounded-2xl bg-primary/10 text-primary flex items-center justify-center transition-transform group-hover:rotate-12">
                     <PaintbrushIcon size={18} />
                   </div>
-                  <p className="flex-1 font-bold text-base">Theme Mode</p>
+                  <p className="flex-1 font-bold text-base">{t("settings.theme_mode", language)}</p>
                 </div>
 
                 <div className="flex gap-1 bg-muted/50 rounded-2xl p-1.5 border-2 border-transparent focus-within:border-primary/10">
                   {[
-                    { id: ThemeMode.AUTO, icon: Laptop, label: "Auto" },
-                    { id: ThemeMode.LIGHT, icon: Sun, label: "Light" },
-                    { id: ThemeMode.DARK, icon: Moon, label: "Dark" },
+                    { id: ThemeMode.AUTO, icon: Laptop, label: t("settings.auto", language) },
+                    { id: ThemeMode.LIGHT, icon: Sun, label: t("settings.light", language) },
+                    { id: ThemeMode.DARK, icon: Moon, label: t("settings.dark", language) },
                   ].map((mode) => (
                     <Button
                       key={mode.id}
@@ -299,25 +300,25 @@ export default function SettingsPage() {
 
         {/* SECURITY */}
         <motion.div variants={itemVariants}>
-          <Section title="Security & Privacy">
+          <Section title={t("settings.security_privacy", language)}>
             <NavigationRow
               icon={Link2Icon}
-              label="Connected Accounts"
+              label={t("settings.connected_accounts", language)}
               onClick={() => router.push("/settings/link-account" as any)}
             />
             <NavigationRow
               icon={LockKeyhole}
-              label="Safety & Security"
+              label={t("settings.safety_security", language)}
               onClick={() => router.push("/settings/security" as any)}
             />
             <NavigationRow
               icon={KeyRoundIcon}
-              label="Active Sessions"
+              label={t("settings.active_sessions", language)}
               onClick={() => router.push("/settings/session-management" as any)}
             />
             <NavigationRow
               icon={Skull}
-              label="Danger Zone"
+              label={t("settings.danger_zone", language)}
               labelClassName="text-rose-600"
               iconContainerClassName="bg-rose-100 text-rose-600"
               onClick={() => router.push("/settings/danger" as any)}
@@ -325,17 +326,23 @@ export default function SettingsPage() {
           </Section>
         </motion.div>
 
-        {/* LOGOUT */}
-        <motion.div variants={itemVariants} whileTap={{ scale: 0.98 }}>
+        <FooterButtons>
           <Button
-            onClick={handleLogout}
             variant="destructive"
-            className="w-full h-14 rounded-2xl gap-3 font-black uppercase tracking-[0.2em] shadow-lg shadow-rose-200 dark:shadow-rose-950/20"
+            className={cn(
+              "h-14 w-full text-white md:w-auto rounded-full px-8 md:px-12 gap-3 font-bold uppercase",
+              "bg-gradient-to-r from-red-600 to-rose-500 hover:from-red-700 hover:to-rose-600",
+              "shadow-[0_10px_40px_rgba(225,29,72,0.3)] hover:shadow-[0_15px_50px_rgba(225,29,72,0.4)]",
+              "border-t border-white/20 transition-all duration-300"
+            )}
+            onClick={handleLogout}
           >
-            <LogOut size={20} />
-            {t("settings.logout", language)}
+            <LogOut className="size-5 md:size-6" />
+            <span className="text-center font-black tracking-[0.15em] text-sm hidden md:block">
+              {t("settings.logout", language)}
+            </span>
           </Button>
-        </motion.div>
+        </FooterButtons>
 
         <motion.div
           variants={itemVariants}
@@ -352,6 +359,7 @@ export default function SettingsPage() {
 import { Skeleton } from "@/components/ui/skeleton";
 import { AppHeader } from "@/components/app-header";
 import { Header } from "@/components/header";
+import { FooterButtons } from "@/components/footer-buttons";
 
 function SettingsSkeleton() {
   return (

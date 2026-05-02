@@ -49,7 +49,7 @@ const Sidebar = () => {
         )}
       >
         {/* Toggle Button - Floating on Right Edge */}
-        <div className="absolute top-18 -right-4 z-100">
+        <div className="absolute top-20 -right-4">
           <button
             onClick={() => setCollapsed(!collapsed)}
             className="flex items-center justify-center h-8 w-8 rounded-full bg-sidebar border border-sidebar-border text-sidebar-foreground shadow-md hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-all duration-300 active:scale-90 cursor-pointer"
@@ -124,7 +124,7 @@ const Sidebar = () => {
       {/* Bottom Shade */}
       <div className="fixed bottom-0 left-0 right-0 z-40 bg-linear-to-t from-background to-transparent h-28 pointer-events-none lg:hidden"></div>
 
-      <div className={`hidden lg:block shrink-0 ${collapsed ? "w-20" : "w-64"}`} />
+      <div className={`hidden lg:block shrink-0 ${collapsed ? "w-16" : "w-64"}`} />
     </>
   );
 }

@@ -8,13 +8,15 @@ import { AdminSkeleton } from "./components/admin-skeleton";
 
 // Hooks
 import { getUserSession } from "@/lib/auth/auth";
+import { t } from "@/lib/languages/i18n";
 
 export default async function AdminPage() {
     const session = await getUserSession();
+    const language = session?.session.userSettings.language ?? "en";
 
     // Guard: Only admins can access this page
     if (session?.user.role !== "admin") {
-        return <Restricted />;
+        return <Restricted language={language} />;
     }
 
     return (
@@ -24,7 +26,7 @@ export default async function AdminPage() {
     );
 }
 
-export function Restricted() {
+export function Restricted({ language }: { language: string }) {
     return (
         <div className="flex-1 flex flex-col items-center justify-center p-8 text-center space-y-8 animate-in fade-in zoom-in duration-500">
             <div className="relative">
@@ -34,14 +36,14 @@ export function Restricted() {
                 </div>
             </div>
             <div className="space-y-2">
-                <h2 className="text-2xl font-bold tracking-tight text-foreground">Access Restricted</h2>
+                <h2 className="text-2xl font-bold tracking-tight text-foreground">{t("admin.access_restricted", language)}</h2>
                 <p className="text-sm text-muted-foreground font-medium max-w-sm mx-auto leading-relaxed">
-                    You do not have the necessary permissions to access this administrative resource.
+                    {t("admin.restricted_description", language)}
                 </p>
             </div>
             <a href="/dashboard">
                 <button className="px-10 py-3 bg-foreground text-background font-semibold rounded-xl hover:shadow-lg transition-all active:scale-[0.98] text-[11px] uppercase tracking-widest">
-                    Return to Dashboard
+                    {t("admin.return_to_dashboard", language)}
                 </button>
             </a>
         </div>

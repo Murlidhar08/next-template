@@ -1,5 +1,7 @@
 'use client'
 
+import { useUserConfig } from '@/components/providers/user-config-provider'
+import { t } from '@/lib/languages/i18n'
 import { BetterAuthActionButton } from '@/components/auth/better-auth-action-button'
 import { auth } from '@/lib/auth/auth'
 import { authClient } from '@/lib/auth/auth-client'
@@ -21,17 +23,22 @@ const itemVariants = {
 };
 
 export function LinkAccountModalBody({ currentAccounts }: { currentAccounts?: Account[] }) {
+    const { language } = useUserConfig()
     return (
         <div className="space-y-10">
             <section className="space-y-4">
-                <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-muted-foreground ml-2">Active Connections</h3>
+                <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-muted-foreground ml-2">
+                    {t("linked_accounts.active_connections", language)}
+                </h3>
 
                 {currentAccounts?.length === 0 ? (
                     <motion.div
                         variants={itemVariants}
                         className="p-8 text-center bg-card/50 rounded-3xl border border-dashed border-muted-foreground/20 text-muted-foreground"
                     >
-                        <p className="text-sm font-medium">No accounts linked yet</p>
+                        <p className="text-sm font-medium">
+                            {t("linked_accounts.no_accounts_linked", language)}
+                        </p>
                     </motion.div>
                 ) : (
                     <div className="space-y-3">
@@ -47,7 +54,9 @@ export function LinkAccountModalBody({ currentAccounts }: { currentAccounts?: Ac
             </section>
 
             <section className="space-y-4">
-                <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-muted-foreground ml-2">Available Providers</h3>
+                <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-muted-foreground ml-2">
+                    {t("linked_accounts.available_providers", language)}
+                </h3>
 
                 <div className="grid gap-3">
                     {SUPPORTED_OAUTH_PROVIDERS.filter(
@@ -71,8 +80,8 @@ function AccountCard({
     provider: string
     account?: Account
 }) {
+    const { language } = useUserConfig()
     const router = useRouter()
-
     const providerDetails =
         SUPPORTED_OAUTH_PROVIDER_DETAILS[
         provider as SupportedOAuthProvider
@@ -123,11 +132,11 @@ function AccountCard({
                         <p className="font-bold text-base leading-tight">{providerDetails.name}</p>
                         {account ? (
                             <p className="text-[10px] font-bold uppercase tracking-widest text-primary/60 mt-0.5">
-                                Verified
+                                {t("linked_accounts.verified", language)}
                             </p>
                         ) : (
                             <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground opacity-60 mt-0.5">
-                                Not Connected
+                                {t("linked_accounts.not_connected", language)}
                             </p>
                         )}
                     </div>
@@ -141,7 +150,7 @@ function AccountCard({
                         action={unlinkAccount}
                     >
                         <Trash2 className="size-4 mr-2" />
-                        Unlink
+                        {t("linked_accounts.unlink", language)}
                     </BetterAuthActionButton>
                 ) : (
                     <BetterAuthActionButton
@@ -151,7 +160,7 @@ function AccountCard({
                         action={linkAccount}
                     >
                         <Plus className="size-4 mr-2" />
-                        Connect
+                        {t("linked_accounts.connect", language)}
                     </BetterAuthActionButton>
                 )}
             </div>
@@ -161,4 +170,3 @@ function AccountCard({
         </motion.div>
     )
 }
-

@@ -8,9 +8,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Users, Settings as SettingsIcon } from "lucide-react";
 import { AppSettingsTab } from "./app-settings-tab";
 import AppTabs from "@/components/app-tabs";
+import { useUserConfig } from "@/components/providers/user-config-provider";
+import { t } from "@/lib/languages/i18n";
 
 export function AdminContent() {
     const { data: users, isLoading } = useAdminUsers();
+    const { language } = useUserConfig();
 
     if (isLoading) {
         return <AdminSkeleton />;
@@ -30,7 +33,7 @@ export function AdminContent() {
                 tabs={[
                     {
                         id: "user-management",
-                        label: "User Management",
+                        label: t("admin.user_management", language),
                         icon: <Users size={20} />,
                         content: (
                             <>
@@ -46,7 +49,7 @@ export function AdminContent() {
                     },
                     {
                         id: "application-settings",
-                        label: "Application Settings",
+                        label: t("admin.application_settings", language),
                         icon: <SettingsIcon size={20} />,
                         content: <AppSettingsTab />
                     }

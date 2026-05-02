@@ -2,6 +2,8 @@
 
 import { BackHeader } from "@/components/back-header";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useUserConfig } from "@/components/providers/user-config-provider";
+import { t } from "@/lib/languages/i18n";
 import { useSession } from "@/lib/auth/auth-client";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
@@ -10,6 +12,7 @@ import { SecurityModalBody } from "../components/security-body";
 export default function SecurityPage() {
     const router = useRouter();
     const { data: session, isPending } = useSession();
+    const { language } = useUserConfig();
 
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -28,7 +31,7 @@ export default function SecurityPage() {
     return (
         <div className="min-h-screen bg-background pb-20">
             <BackHeader
-                title="Security"
+                title={t("security.title", language)}
                 backUrl="/settings"
             />
 
@@ -48,9 +51,10 @@ export default function SecurityPage() {
 }
 
 function SecuritySkeleton() {
+    const { language } = useUserConfig();
     return (
         <div className="min-h-screen bg-background">
-            <BackHeader title="Security" />
+            <BackHeader title={t("security.title", language)} />
             <div className="mx-auto max-w-lg p-6 mt-6 space-y-8">
                 <div className="space-y-4">
                     <Skeleton className="h-5 w-40" />
