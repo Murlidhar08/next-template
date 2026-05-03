@@ -1,15 +1,14 @@
 "use client";
 
-import { useAdminUsers } from "@/tanstacks/admin";
-import { AdminSkeleton } from "./admin-skeleton";
-import { AdminStats } from "./admin-stats";
-import { UserList } from "./user-list";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Users, Settings as SettingsIcon } from "lucide-react";
-import { AppSettingsTab } from "./app-settings-tab";
 import AppTabs from "@/components/app-tabs";
 import { useUserConfig } from "@/components/providers/user-config-provider";
 import { t } from "@/lib/languages/i18n";
+import { useAdminUsers } from "@/tanstacks/admin";
+import { Settings as SettingsIcon, Users } from "lucide-react";
+import { AdminSkeleton } from "./admin-skeleton";
+import { AdminStats } from "./admin-stats";
+import { AppSettingsTab } from "./app-settings-tab";
+import { UserList } from "./user-list";
 
 export function AdminContent() {
     const { data: users, isLoading } = useAdminUsers();
@@ -33,7 +32,7 @@ export function AdminContent() {
                 tabs={[
                     {
                         id: "user-management",
-                        label: t("admin.user_management", language),
+                        label: t("admin.user_mng.title", language),
                         icon: <Users size={20} />,
                         content: (
                             <>
@@ -49,7 +48,7 @@ export function AdminContent() {
                     },
                     {
                         id: "application-settings",
-                        label: t("admin.application_settings", language),
+                        label: t("admin.app_config.title", language),
                         icon: <SettingsIcon size={20} />,
                         content: <AppSettingsTab />
                     }

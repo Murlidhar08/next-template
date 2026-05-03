@@ -82,10 +82,10 @@ export default function SettingsPage() {
   const handleLogout = async () => {
     try {
       await signOut();
-      toast.success("Logged out successfully");
+      toast.success(t("profile.msg.logged_out_successfully", language));
       setTimeout(() => router.replace("/login"), 300);
     } catch (error) {
-      toast.error("Failed to logout");
+      toast.error(t("profile.msg.failed_to_logout", language));
     }
   };
 
@@ -153,7 +153,7 @@ export default function SettingsPage() {
                   const v = value as Currency
                   setCurrency(v)
                   upsertUserSettings({ currency: v })
-                  toast.success(`Currency updated to ${v}`)
+                  toast.success(t("settings.msg.currency_updated", language, { currency: v }))
                 }}
               >
                 <SelectTrigger className="w-[140px] h-10 rounded-xl border-2 font-bold focus:ring-primary/20">
@@ -176,7 +176,7 @@ export default function SettingsPage() {
                   if (!value) return
                   setDateFormat(value)
                   void upsertUserSettings({ dateFormat: value })
-                  toast.success(`Date format updated`)
+                  toast.success(t("settings.msg.date_format_updated", language))
                 }}
               >
                 <SelectTrigger className="w-[140px] h-10 rounded-xl border-2 font-bold focus:ring-primary/20">
@@ -198,7 +198,7 @@ export default function SettingsPage() {
                   if (!value) return
                   setTimeFormat(value)
                   void upsertUserSettings({ timeFormat: value })
-                  toast.success(`Time format updated`)
+                  toast.success(t("settings.msg.time_format_updated", language))
                 }}
               >
                 <SelectTrigger className="w-[140px] h-10 rounded-xl border-2 font-bold focus:ring-primary/20">
@@ -218,7 +218,7 @@ export default function SettingsPage() {
                   if (!value) return
                   setLanguage(value)
                   void upsertUserSettings({ language: value })
-                  toast.success(`Language updated`)
+                  toast.success(t("settings.msg.language_updated", language))
                 }}
               >
                 <SelectTrigger className="w-[140px] h-10 rounded-xl border-2 font-bold focus:ring-primary/20">
@@ -244,7 +244,7 @@ export default function SettingsPage() {
                     const newValue = !isDevMode;
                     setIsDevMode(newValue);
                     localStorage.setItem("dev_mode", String(newValue));
-                    toast.success(`Developer mode ${newValue ? "enabled" : "disabled"}`);
+                    toast.success(t(newValue ? "settings.msg.dev_mode_enabled" : "settings.msg.dev_mode_disabled", language));
                   }}
                 >
                   {isDevMode ? "ON" : "OFF"}
@@ -329,7 +329,7 @@ export default function SettingsPage() {
             variant="destructive"
             className={cn(
               "h-14 w-full text-white md:w-auto rounded-full px-8 md:px-12 gap-3 font-bold uppercase",
-              "bg-gradient-to-r from-red-600 to-rose-500 hover:from-red-700 hover:to-rose-600",
+              "bg-linear-to-r from-red-600 to-rose-500 hover:from-red-700 hover:to-rose-600",
               "shadow-[0_10px_40px_rgba(225,29,72,0.3)] hover:shadow-[0_15px_50px_rgba(225,29,72,0.4)]",
               "border-t border-white/20 transition-all duration-300"
             )}

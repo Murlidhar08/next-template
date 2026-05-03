@@ -27,7 +27,7 @@ export function SecureTab({ email, hasPasswordAccount }: { email: string, hasPas
             className="space-y-4"
         >
             <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-muted-foreground ml-2">
-                {t("security.secure_access", language)}
+                {t("security.access.title", language)}
             </h3>
             <div className="rounded-[2.5rem] bg-card border shadow-xs p-8 relative overflow-hidden group">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-primary/10 transition-colors" />
@@ -64,11 +64,11 @@ function ChangePasswordForm() {
     async function onSubmit(values: ChangePasswordFormValues) {
         await authClient.changePassword(values, {
             onSuccess: () => {
-                toast.success(t("security.password_updated", language))
+                toast.success(t("security.access.msg.password_updated", language))
                 reset()
             },
             onError: (error) => {
-                toast.error(error?.error?.message ?? t("security.password_update_failed", language))
+                toast.error(error?.error?.message ?? t("security.access.msg.password_update_failed", language))
             },
         })
     }
@@ -78,29 +78,29 @@ function ChangePasswordForm() {
             <div className="grid gap-6">
                 <div className="space-y-2">
                     <label className="ml-1 text-[11px] font-black uppercase tracking-widest text-muted-foreground italic">
-                        {t("security.current_password", language)}
+                        {t("security.access.current_password", language)}
                     </label>
                     <Input
-                        {...register("currentPassword", { required: t("security.required", language) })}
+                        {...register("currentPassword", { required: t("security.access.required", language) })}
                         type="password"
                         className="h-14 rounded-2xl bg-muted/10 border-muted-foreground/10 focus:bg-background transition-all"
                     />
                     {errors.currentPassword && <p className="ml-1 text-xs font-bold text-rose-500 italic">
-                        {t("security.enter_current_password", language)}
+                        {t("security.access.msg.enter_current_password", language)}
                     </p>}
                 </div>
 
                 <div className="space-y-2">
                     <label className="ml-1 text-[11px] font-black uppercase tracking-widest text-muted-foreground italic">
-                        {t("security.new_password", language)}
+                        {t("security.access.new_password", language)}
                     </label>
                     <Input
-                        {...register("newPassword", { required: t("security.required", language), minLength: 8 })}
+                        {...register("newPassword", { required: t("security.access.required", language), minLength: 8 })}
                         type="password"
                         className="h-14 rounded-2xl bg-muted/10 border-muted-foreground/10 focus:bg-background transition-all"
                     />
                     {errors.newPassword && <p className="ml-1 text-xs font-bold text-rose-500 italic">
-                        {t("security.min_length_8", language)}
+                        {t("security.access.min_length_8", language)}
                     </p>}
                 </div>
             </div>
@@ -113,7 +113,7 @@ function ChangePasswordForm() {
                     className="size-5 rounded-lg border-2"
                 />
                 <label htmlFor="revoke-sessions" className="text-sm font-bold text-muted-foreground group-hover:text-foreground cursor-pointer transition-colors">
-                    {t("security.revoke_others_label", language)}
+                    {t("security.access.revoke_others_label", language)}
                 </label>
             </div>
 
@@ -122,7 +122,7 @@ function ChangePasswordForm() {
                 className="w-full h-14 rounded-2xl font-black uppercase tracking-widest shadow-xl shadow-primary/20 hover:shadow-2xl transition-all active:scale-[0.98]"
                 disabled={isSubmitting}
             >
-                <LoadingSwap isLoading={isSubmitting}>{t("security.update_password", language)}</LoadingSwap>
+                <LoadingSwap isLoading={isSubmitting}>{t("security.access.update_password", language)}</LoadingSwap>
             </Button>
         </form>
     )
@@ -133,20 +133,20 @@ function SetPasswordForm({ email }: { email: string }) {
     return (
         <div className="space-y-6 relative z-10 text-center sm:text-left">
             <div className="space-y-2">
-                <p className="font-bold text-lg text-foreground">{t("security.password_not_set", language)}</p>
+                <p className="font-bold text-lg text-foreground">{t("security.access.password_not_set", language)}</p>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                    {t("security.password_not_set_description", language)}
+                    {t("security.access.password_not_set_description", language)}
                 </p>
             </div>
 
             <BetterAuthActionButton
                 variant="outline"
                 className="w-full h-14 rounded-2xl font-black uppercase tracking-widest border-primary/20 hover:bg-primary/5 transition-all text-primary"
-                successMessage={t("security.recovery_link_sent", language)}
+                successMessage={t("security.access.msg.recovery_link_sent", language)}
                 action={() => authClient.requestPasswordReset({ email, redirectTo: "/reset-password" })}
             >
                 <Mail className="size-4 mr-2" />
-                {t("security.initialize_password_setup", language)}
+                {t("security.access.initialize_password_setup", language)}
             </BetterAuthActionButton>
         </div>
     )

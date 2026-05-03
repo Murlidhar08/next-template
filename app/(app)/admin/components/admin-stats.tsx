@@ -1,9 +1,9 @@
 "use client";
 
-import { ShieldCheck, UserCheck, Users, UserX } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { useUserConfig } from "@/components/providers/user-config-provider";
 import { t } from "@/lib/languages/i18n";
+import { cn } from "@/lib/utils";
+import { ShieldCheck, UserCheck, Users, UserX } from "lucide-react";
 
 interface AdminStatsProps {
     totalUsers: number;
@@ -16,36 +16,36 @@ export function AdminStats({ totalUsers, activeUsers, bannedUsers, adminUsers }:
     const { language } = useUserConfig();
     const stats = [
         {
-            title: t("admin.stats.total_users", language),
+            title: t("admin.user_mng.total_users", language),
             value: totalUsers,
             icon: <Users className="h-4 w-4 sm:h-5 sm:w-5 text-white" />,
             bgColor: "bg-indigo-600 dark:bg-indigo-500/90 shadow-indigo-500/20",
             glowColor: "bg-white/20",
-            description: t("admin.stats.registered", language),
+            description: t("admin.user_mng.registered", language),
         },
         {
-            title: t("admin.stats.active", language),
+            title: t("admin.user_mng.active", language),
             value: activeUsers,
             icon: <UserCheck className="h-4 w-4 sm:h-5 sm:w-5 text-white" />,
             bgColor: "bg-emerald-600 dark:bg-emerald-500/90 shadow-emerald-500/20",
             glowColor: "bg-emerald-400/20",
-            description: t("admin.stats.non_banned", language),
+            description: t("admin.user_mng.non_banned", language),
         },
         {
-            title: t("admin.stats.banned", language),
+            title: t("admin.user_mng.banned", language),
             value: bannedUsers,
             icon: <UserX className="h-4 w-4 sm:h-5 sm:w-5 text-white" />,
             bgColor: "bg-rose-600 dark:bg-rose-500/90 shadow-rose-500/20",
             glowColor: "bg-rose-400/20",
-            description: t("admin.stats.restricted", language),
+            description: t("admin.user_mng.restricted", language),
         },
         {
-            title: t("admin.stats.admins", language),
+            title: t("admin.user_mng.admins", language),
             value: adminUsers,
             icon: <ShieldCheck className="h-4 w-4 sm:h-5 sm:w-5 text-white" />,
             bgColor: "bg-slate-900 dark:bg-slate-950 shadow-slate-900/20",
             glowColor: "bg-indigo-500/30",
-            description: t("admin.stats.privileged", language),
+            description: t("admin.user_mng.privileged", language),
         },
     ];
 

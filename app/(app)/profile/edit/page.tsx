@@ -92,25 +92,25 @@ export default function EditProfilePage() {
       const emailResult = res[1] ?? { error: false }
 
       if (updateUserResult?.error) {
-        toast.error(updateUserResult.error.message || t("profile_edit.failed_to_update_profile", language))
+        toast.error(updateUserResult.error.message || t("profile.edit.msg.failed_to_update_profile", language))
         return
       }
 
       if (emailResult?.error) {
-        toast.error(emailResult.error.message || t("profile_edit.failed_to_change_email", language))
+        toast.error(emailResult.error.message || t("profile.edit.msg.failed_to_change_email", language))
         return
       }
 
       if (data.email !== user?.email) {
-        toast.success(t("profile_edit.verify_email_notice", language))
+        toast.success(t("profile.edit.msg.verify_email_notice", language))
       } else {
-        toast.success(t("profile_edit.profile_updated_successfully", language))
+        toast.success(t("profile.edit.msg.profile_updated_successfully", language))
       }
 
       router.refresh()
       router.push('/profile' as any)
     } catch (error) {
-      toast.error(t("profile_edit.something_went_wrong", language));
+      toast.error(t("profile.edit.msg.something_went_wrong", language));
       console.error('Something went wrong', error);
     }
   }
@@ -122,7 +122,7 @@ export default function EditProfilePage() {
       variants={containerVariants}
       className="relative w-full bg-background pb-34"
     >
-      <BackHeader title={t("profile_edit.title", language)} backUrl={'/profile' as any} />
+      <BackHeader title={t("profile.edit.title", language)} backUrl={'/profile' as any} />
 
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* Avatar Section */}
@@ -144,22 +144,22 @@ export default function EditProfilePage() {
             </motion.button>
             <div className="absolute inset-0 rounded-full bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-2xl -z-10" />
           </div>
-          <p className="mt-4 text-xs font-black uppercase tracking-[0.2em] text-primary/60">{t("profile_edit.upload_new_avatar", language)}</p>
+          <p className="mt-4 text-xs font-black uppercase tracking-[0.2em] text-primary/60">{t("profile.edit.upload_new_avatar", language)}</p>
         </motion.section>
 
         {/* Form Fields */}
         <motion.section variants={itemVariants} className="mx-auto flex w-full max-w-lg flex-col gap-6 px-6">
           <Field
-            label={t("profile_edit.name_label", language)}
+            label={t("profile.edit.name_label", language)}
             icon={User}
-            registration={register('name', { required: t("profile_edit.name_required", language) })}
+            registration={register('name', { required: t("profile.edit.msg.name_required", language) })}
           />
 
           <Field
             label={t("profile.phone_number", language)}
             icon={Phone}
             registration={register('contactNo')}
-            placeholder={t("profile_edit.phone_placeholder", language)}
+            placeholder={t("profile.edit.phone_placeholder", language)}
           />
 
           <Field
@@ -167,11 +167,11 @@ export default function EditProfilePage() {
             icon={Mail}
             type="email"
             disabled={true}
-            registration={register('email', { required: t("profile_edit.email_required", language) })}
+            registration={register('email', { required: t("profile.edit.msg.email_required", language) })}
           />
           <div className="flex items-center gap-2 p-4 rounded-2xl bg-muted/30 border border-dashed border-muted-foreground/20">
             <CheckCircle2 size={16} className="text-muted-foreground" />
-            <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">{t("profile_edit.email_verification_notice", language)}</p>
+            <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">{t("profile.edit.msg.email_verification_notice", language)}</p>
           </div>
         </motion.section>
 
@@ -184,7 +184,7 @@ export default function EditProfilePage() {
             <LoadingSwap isLoading={isSubmitting}>
               <div className="flex items-center gap-2">
                 <Edit3 size={18} />
-                <span className="hidden md:block">{t("profile_edit.update_profile_button", language)}</span>
+                <span className="hidden md:block">{t("profile.edit.update_profile_button", language)}</span>
               </div>
             </LoadingSwap>
           </Button>
@@ -198,7 +198,7 @@ function EditProfileSkeleton() {
   const { language } = useUserConfig()
   return (
     <div className="min-h-screen bg-background">
-      <BackHeader title={t("profile_edit.title", language)} />
+      <BackHeader title={t("profile.edit.title", language)} />
       <div className="flex flex-col items-center py-10 space-y-4">
         <Skeleton className="h-32 w-32 rounded-full" />
         <Skeleton className="h-4 w-32" />

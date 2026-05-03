@@ -39,7 +39,7 @@ export function DangerModalBody() {
                 <div className="flex items-center gap-3 p-4 rounded-2xl bg-rose-50/50 border border-rose-100 mb-8">
                     <Info size={16} className="text-rose-500 shrink-0" />
                     <p className="text-[11px] text-rose-700 font-bold uppercase tracking-wide leading-tight">
-                        {t("danger.delete_confirmation_email", language)}
+                        {t("danger.msg.delete_confirmation_email", language)}
                     </p>
                 </div>
 
@@ -47,7 +47,7 @@ export function DangerModalBody() {
                     requireAreYouSure
                     variant="destructive"
                     className="w-full h-14 rounded-2xl font-black uppercase tracking-widest shadow-xl shadow-rose-500/20 hover:shadow-2xl hover:shadow-rose-500/30 transition-all active:scale-[0.98]"
-                    successMessage={t("danger.delete_success_message", language)}
+                    successMessage={t("danger.msg.delete_success_message", language)}
                     action={() =>
                         authClient.deleteUser({
                             callbackURL: '/',

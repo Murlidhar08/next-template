@@ -22,13 +22,13 @@ export function TwoFactorTab({ hasPasswordAccount, isTwoFactorEnabled }: { hasPa
         >
             <div className="flex items-center justify-between ml-2">
                 <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-muted-foreground">
-                    {t("security.two_factor_auth", language)}
+                    {t("security.two_factor.title", language)}
                 </h3>
                 <div className={cn(
                     "px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border",
                     isTwoFactorEnabled ? "bg-emerald-50 text-emerald-600 border-emerald-100" : "bg-muted text-muted-foreground border-transparent"
                 )}>
-                    {isTwoFactorEnabled ? t("security.enabled", language) : t("security.disabled", language)}
+                    {isTwoFactorEnabled ? t("security.two_factor.enabled", language) : t("security.two_factor.disabled", language)}
                 </div>
             </div>
 
@@ -38,9 +38,9 @@ export function TwoFactorTab({ hasPasswordAccount, isTwoFactorEnabled }: { hasPa
                         <ShieldCheck size={24} />
                     </div>
                     <div className="space-y-1">
-                        <p className="font-bold text-base">{t("security.authenticator_app", language)}</p>
+                        <p className="font-bold text-base">{t("security.two_factor.authenticator_app", language)}</p>
                         <p className="text-sm text-muted-foreground leading-relaxed">
-                            {t("security.authenticator_description", language)}
+                            {t("security.two_factor.authenticator_description", language)}
                         </p>
                     </div>
                 </div>
@@ -49,7 +49,7 @@ export function TwoFactorTab({ hasPasswordAccount, isTwoFactorEnabled }: { hasPa
                     {hasPasswordAccount === false ? (
                         <div className="p-6 text-center">
                             <p className="text-sm text-muted-foreground italic">
-                                {t("security.set_password_first", language)}
+                                {t("security.access.set_password_first", language)}
                             </p>
                         </div>
                     ) : (
@@ -60,7 +60,7 @@ export function TwoFactorTab({ hasPasswordAccount, isTwoFactorEnabled }: { hasPa
                 {!isTwoFactorEnabled && (
                     <div className="flex items-center gap-2 p-4 rounded-2xl bg-amber-50/50 border border-amber-100/50">
                         <p className="text-[11px] text-amber-700 font-bold uppercase tracking-wide">
-                            {t("security.two_factor_recommended", language)}
+                            {t("security.two_factor.recommended", language)}
                         </p>
                     </div>
                 )}

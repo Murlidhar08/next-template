@@ -208,7 +208,7 @@ function SessionCard({
                         variant="ghost"
                         className="h-12 w-12 rounded-2xl text-rose-500 hover:bg-rose-500/10 transition-colors"
                         action={revokeSession}
-                        successMessage={t("session.session_revoked", language)}
+                        successMessage={t("session.msg.session_revoked", language)}
                     >
                         <Trash2 className="size-5" />
                     </BetterAuthActionButton>

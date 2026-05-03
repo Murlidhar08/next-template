@@ -61,7 +61,7 @@ export default function SecurityPage() {
                     tabs={[
                         {
                             id: "password",
-                            label: t("security.secure_access", language),
+                            label: t("security.access.title", language),
                             icon: <Lock size={14} />,
                             content: (
                                 <SecureTab
@@ -72,7 +72,7 @@ export default function SecurityPage() {
                         },
                         {
                             id: "2fa",
-                            label: t("security.two_factor_auth", language),
+                            label: t("security.two_factor.title", language),
                             icon: <ShieldCheck size={14} />,
                             content: (
                                 <TwoFactorTab
@@ -82,8 +82,8 @@ export default function SecurityPage() {
                             )
                         },
                         {
-                            id: "passkey",
-                            label: t("security.passkey", language),
+                            id: "passkeys",
+                            label: t("security.passkeys.title", language),
                             icon: <Key size={14} />,
                             content: (
                                 <PasskeyTab />

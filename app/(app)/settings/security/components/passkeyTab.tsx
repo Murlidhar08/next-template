@@ -52,7 +52,7 @@ export function PasskeyTab() {
 
     const handleAddPasskey = async () => {
         if (!passkeyName.trim()) {
-            toast.error(t("security.required", language));
+            toast.error(t("security.access.required", language));
             return;
         }
 
@@ -62,15 +62,15 @@ export function PasskeyTab() {
                 name: passkeyName
             });
             if (error) {
-                toast.error(error.message || t("security.something_went_wrong", language));
+                toast.error(error.message || t("profile.edit.msg.something_went_wrong", language));
             } else {
-                toast.success(t("security.passkey_registered", language));
+                toast.success(t("security.passkeys.msg.passkey_registered", language));
                 setIsDialogOpen(false);
                 setPasskeyName("");
                 refetch();
             }
         } catch (err) {
-            toast.error(t("security.something_went_wrong", language));
+            toast.error(t("profile.edit.msg.something_went_wrong", language));
         } finally {
             setIsAdding(false);
         }
@@ -78,7 +78,7 @@ export function PasskeyTab() {
 
     const handleUpdatePasskey = async () => {
         if (!editingPasskey || !editingPasskey.name.trim()) {
-            toast.error(t("security.required", language));
+            toast.error(t("security.access.required", language));
             return;
         }
 
@@ -89,15 +89,15 @@ export function PasskeyTab() {
                 name: editingPasskey.name
             });
             if (error) {
-                toast.error(error.message || t("security.something_went_wrong", language));
+                toast.error(error.message || t("profile.edit.msg.something_went_wrong", language));
             } else {
-                toast.success(t("security.password_updated", language));
+                toast.success(t("security.access.msg.password_updated", language));
                 setIsEditDialogOpen(false);
                 setEditingPasskey(null);
                 refetch();
             }
         } catch (err) {
-            toast.error(t("security.something_went_wrong", language));
+            toast.error(t("profile.edit.msg.something_went_wrong", language));
         } finally {
             setIsUpdating(false);
         }
@@ -107,13 +107,13 @@ export function PasskeyTab() {
         try {
             const { error } = await authClient.passkey.deletePasskey({ id });
             if (error) {
-                toast.error(error.message || t("security.something_went_wrong", language));
+                toast.error(error.message || t("profile.edit.msg.something_went_wrong", language));
             } else {
-                toast.success(t("security.passkey_deleted", language));
+                toast.success(t("security.passkeys.msg.passkey_deleted", language));
                 refetch();
             }
         } catch (err) {
-            toast.error(t("security.something_went_wrong", language));
+            toast.error(t("profile.edit.msg.something_went_wrong", language));
         }
     };
 
@@ -127,10 +127,10 @@ export function PasskeyTab() {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 ml-2">
                 <div className="space-y-1">
                     <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-muted-foreground">
-                        {t("security.passkey", language)}
+                        {t("security.passkeys.title", language)}
                     </h3>
                     <p className="text-xs text-muted-foreground leading-relaxed max-w-md">
-                        {t("security.passkey_description", language)}
+                        {t("security.passkeys.description", language)}
                     </p>
                 </div>
                 <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -148,7 +148,7 @@ export function PasskeyTab() {
                             >
                                 <Plus size={14} className="mr-2" />
                                 <span className="text-center font-black tracking-[0.15em] text-sm hidden md:block">
-                                    {t("security.add_passkey", language)}
+                                    {t("security.passkeys.add_passkey", language)}
                                 </span>
                             </Button>
                         </FooterButtons>
@@ -158,16 +158,16 @@ export function PasskeyTab() {
                             <div className="h-16 w-16 rounded-[2rem] bg-primary/5 text-primary flex items-center justify-center mb-2">
                                 <Key size={32} />
                             </div>
-                            <DialogTitle className="text-2xl font-black">{t("security.register_passkey", language)}</DialogTitle>
+                            <DialogTitle className="text-2xl font-black">{t("security.passkeys.register_passkey", language)}</DialogTitle>
                             <DialogDescription className="text-muted-foreground text-base">
-                                {t("security.passkey_description", language)}
+                                {t("security.passkeys.description", language)}
                             </DialogDescription>
                         </DialogHeader>
 
                         <div className="space-y-6">
                             <div className="space-y-2">
                                 <Label htmlFor="passkey-name" className="ml-1 text-[11px] font-black uppercase tracking-widest text-muted-foreground italic">
-                                    {t("security.passkey_name", language)}
+                                    {t("security.passkeys.passkey_name", language)}
                                 </Label>
                                 <Input
                                     id="passkey-name"
@@ -185,7 +185,7 @@ export function PasskeyTab() {
                                 className="w-full h-14 rounded-2xl font-black uppercase tracking-widest shadow-xl shadow-primary/20 hover:shadow-2xl transition-all active:scale-[0.98]"
                             >
                                 <LoadingSwap isLoading={isAdding}>
-                                    {t("security.add_passkey", language)}
+                                    {t("security.passkeys.add_passkey", language)}
                                 </LoadingSwap>
                             </Button>
                         </div>
@@ -237,16 +237,16 @@ export function PasskeyTab() {
                                             <div className="h-16 w-16 rounded-[2rem] bg-primary/5 text-primary flex items-center justify-center mb-2">
                                                 <Pencil size={32} />
                                             </div>
-                                            <DialogTitle className="text-2xl font-black">{t("profile_edit.title", language)}</DialogTitle>
+                                            <DialogTitle className="text-2xl font-black">{t("profile.edit.title", language)}</DialogTitle>
                                             <DialogDescription className="text-muted-foreground text-base">
-                                                {t("security.passkey_name", language)}
+                                                {t("security.passkeys.passkey_name", language)}
                                             </DialogDescription>
                                         </DialogHeader>
 
                                         <div className="space-y-6">
                                             <div className="space-y-2">
                                                 <Label htmlFor="edit-passkey-name" className="ml-1 text-[11px] font-black uppercase tracking-widest text-muted-foreground italic">
-                                                    {t("security.passkey_name", language)}
+                                                    {t("security.passkeys.passkey_name", language)}
                                                 </Label>
                                                 <Input
                                                     id="edit-passkey-name"
@@ -285,9 +285,9 @@ export function PasskeyTab() {
                                             <div className="h-12 w-12 rounded-2xl bg-rose-50 text-rose-500 flex items-center justify-center mb-4">
                                                 <ShieldCheck size={24} />
                                             </div>
-                                            <AlertDialogTitle className="text-xl font-black">{t("security.delete_passkey_title", language)}</AlertDialogTitle>
+                                            <AlertDialogTitle className="text-xl font-black">{t("security.passkeys.delete_passkey_title", language)}</AlertDialogTitle>
                                             <AlertDialogDescription className="text-muted-foreground">
-                                                {t("security.delete_passkey_desc", language)}
+                                                {t("security.passkeys.delete_passkey_desc", language)}
                                             </AlertDialogDescription>
                                         </AlertDialogHeader>
                                         <AlertDialogFooter className="mt-6">
@@ -296,7 +296,7 @@ export function PasskeyTab() {
                                                 onClick={() => handleDeletePasskey(passkey.id)}
                                                 className="bg-rose-500 hover:bg-rose-600 rounded-2xl font-bold shadow-lg shadow-rose-100"
                                             >
-                                                {t("admin.user_list.delete_user", language)}
+                                                {t("admin.user_mng.delete_user", language)}
                                             </AlertDialogAction>
                                         </AlertDialogFooter>
                                     </AlertDialogContent>
@@ -310,9 +310,9 @@ export function PasskeyTab() {
                             <Key size={32} />
                         </div>
                         <div className="space-y-1">
-                            <p className="font-bold text-lg">{t("security.no_passkeys", language)}</p>
+                            <p className="font-bold text-lg">{t("security.passkeys.no_passkeys", language)}</p>
                             <p className="text-sm text-muted-foreground max-w-xs mx-auto">
-                                {t("security.passkey_description", language)}
+                                {t("security.passkeys.description", language)}
                             </p>
                         </div>
                         <Button
@@ -320,7 +320,7 @@ export function PasskeyTab() {
                             onClick={() => setIsDialogOpen(true)}
                             className="rounded-2xl font-bold h-12 px-8 mt-2"
                         >
-                            {t("security.register_passkey", language)}
+                            {t("security.passkeys.register_passkey", language)}
                         </Button>
                     </div>
                 )}

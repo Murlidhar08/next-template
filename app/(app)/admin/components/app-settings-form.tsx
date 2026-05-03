@@ -1,19 +1,19 @@
 "use client";
 
+import { updateAppConfig } from "@/actions/admin/app-config";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { cn } from "@/lib/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { motion } from "framer-motion";
+import { Fingerprint, Globe, Layout, Mail, PenLine } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import { updateAppConfig } from "@/actions/admin/app-config";
-import { Globe, Mail, Save, Server, ShieldCheck, Fingerprint, CreditCard, Layout, PenLine } from "lucide-react";
-import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
+import * as z from "zod";
 
 const emailRegex = /^([^<]+<)?([^@\s<>]+@[^@\s<>.]+\.[^@\s<>.]+)>?$/;
 
@@ -36,10 +36,10 @@ const appConfigSchema = z.object({
 
 type AppConfigValues = z.infer<typeof appConfigSchema>;
 
-import { useQueryClient } from "@tanstack/react-query";
+import { FooterButtons } from "@/components/footer-buttons";
 import { useUserConfig } from "@/components/providers/user-config-provider";
 import { t } from "@/lib/languages/i18n";
-import { FooterButtons } from "@/components/footer-buttons";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface AppSettingsFormProps {
     initialData: any;
@@ -51,15 +51,15 @@ export function AppSettingsForm({ initialData }: AppSettingsFormProps) {
     const { language } = useUserConfig();
 
     const appConfigSchema = z.object({
-        appName: z.string().min(1, t("admin.app_config.app_name_required", language)),
-        appDescription: z.string().min(1, t("admin.app_config.description_required", language)),
+        appName: z.string().min(1, t("admin.app_config.msg.app_name_required", language)),
+        appDescription: z.string().min(1, t("admin.app_config.msg.description_required", language)),
         smtpHost: z.string().optional().nullable(),
         smtpPort: z.coerce.number().int().optional().nullable(),
         smtpUser: z.string().optional().nullable(),
         smtpPass: z.string().optional().nullable(),
         smtpSecure: z.boolean().default(false),
         fromEmail: z.string().refine((val) => !val || emailRegex.test(val), {
-            message: t("admin.app_config.invalid_email_format", language),
+            message: t("admin.app_config.msg.invalid_email_format", language),
         }).optional().nullable().or(z.literal("")),
         googleClientId: z.string().optional().nullable(),
         googleClientSecret: z.string().optional().nullable(),
@@ -90,9 +90,9 @@ export function AppSettingsForm({ initialData }: AppSettingsFormProps) {
         try {
             await updateAppConfig(data as any);
             queryClient.invalidateQueries({ queryKey: ["admin-app-config"] });
-            toast.success(t("admin.app_config.settings_updated_success", language));
+            toast.success(t("admin.app_config.msg.settings_updated_success", language));
         } catch (error: any) {
-            toast.error(error.message || t("admin.app_config.settings_update_failed", language));
+            toast.error(error.message || t("admin.app_config.msg.settings_update_failed", language));
         } finally {
             setLoading(false);
         }
@@ -249,14 +249,14 @@ export function AppSettingsForm({ initialData }: AppSettingsFormProps) {
                     variant="default"
                     className={cn(
                         "h-14 w-full text-white md:w-auto rounded-full px-8 md:px-12 gap-3 font-bold uppercase",
-                        "bg-gradient-to-r from-primary to-primary hover:from-primary/80 hover:to-primary/60",
+                        "bg-linear-to-r from-primary to-primary hover:from-primary/80 hover:to-primary/60",
                         "shadow-[0_10px_40px_rgba(225,29,72,0.3)] hover:shadow-[0_15px_50px_rgba(225,29,72,0.4)]",
                         "border-t border-white/20 transition-all duration-300"
                     )}
                 >
                     <PenLine className="size-5 md:size-6" />
                     <span className="text-center font-black tracking-[0.15em] text-sm hidden md:block">
-                        {loading ? t("admin.app_config.saving_settings", language) : t("admin.app_config.sync_config_button", language)}
+                        {loading ? t("admin.app_config.msg.saving_settings", language) : t("admin.app_config.sync_config_button", language)}
                     </span>
                 </Button>
             </FooterButtons>
