@@ -148,7 +148,7 @@ export default {
             upload_new_avatar: "Upload New Avatar",
             name_label: "What's your name?",
             update_profile_button: "Update My Profile",
-            phone_placeholder: "+1 (555) 000-0000",
+            phone_placeholder: "+91 00000-00000",
             msg: {
                 name_required: "Name is required",
                 email_required: "Email is required",

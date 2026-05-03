@@ -148,7 +148,7 @@ export default {
             upload_new_avatar: "नया अवतार अपलोड करें",
             name_label: "आपका नाम क्या है?",
             update_profile_button: "मेरी प्रोफ़ाइल अपडेट करें",
-            phone_placeholder: "+91 (555) 000-0000",
+            phone_placeholder: "+91 00000-00000",
             msg: {
                 name_required: "नाम आवश्यक है",
                 email_required: "ईमेल आवश्यक है",
