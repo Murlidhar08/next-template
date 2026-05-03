@@ -15,6 +15,11 @@ export default {
         en: "English",
         hi: "Hindi"
     },
+    auth: {
+        msg: {
+            session_expired: "Your session has expired. Please login again.",
+        }
+    },
     dashboard: {
         title: "Dashboard",
     },

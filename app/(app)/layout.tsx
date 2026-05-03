@@ -23,10 +23,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   let userConfig = await getUserConfig()
   userConfig = userConfig ?? getDefaultConfig()
 
+  // Get session on the server
   const session = await getUserSession();
-
-  if (!session)
-    redirect("/login" as any);
 
   if (session.user.banned)
     redirect("/banned" as any);

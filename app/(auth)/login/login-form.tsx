@@ -5,12 +5,13 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Eye, EyeOff, Fingerprint, Mail } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
 
 // Lib
 import { authClient, signIn, signInWithDiscord, signInWithGoogle } from "@/lib/auth/auth-client";
 import { envClient } from "@/lib/env.client";
+import { t } from "@/lib/languages/i18n";
 
 // Components
 import { Badge } from "@/components/ui/badge";
@@ -44,7 +45,7 @@ interface LoginFormProps {
   };
 }
 
-export default function LoginForm({ providers }: LoginFormProps) {
+function LoginFormContent({ providers }: LoginFormProps) {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -54,6 +55,15 @@ export default function LoginForm({ providers }: LoginFormProps) {
   const [discordLoading, setDiscordLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [lastLogin, setLastLogin] = useState("");
+  const searchParams = useSearchParams();
+  const errorCode = searchParams.get("error");
+
+  // Handle URL errors (like session expired)
+  useEffect(() => {
+    if (errorCode === "session_expired") {
+      setError(t("auth.msg.session_expired", "en"));
+    }
+  }, [errorCode]);
 
   // Redirect to dashboard
   useEffect(() => {
@@ -430,5 +440,17 @@ export default function LoginForm({ providers }: LoginFormProps) {
         </div>
       </motion.div >
     </div >
+  );
+}
+
+export default function LoginForm({ providers }: LoginFormProps) {
+  return (
+    <Suspense fallback={
+      <div className="h-screen w-full flex items-center justify-center bg-background">
+        <div className="w-8 h-8 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
+      </div>
+    }>
+      <LoginFormContent providers={providers} />
+    </Suspense>
   );
 }

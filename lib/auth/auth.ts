@@ -261,9 +261,17 @@ export const auth = betterAuth({
   }
 });
 
+import { redirect } from "next/navigation";
+
 export type Auth = typeof auth;
 export const getUserSession = async () => {
-  return await auth.api.getSession({
+  const session = await auth.api.getSession({
     headers: await headers()
   });
+
+  if (session == null) {
+    redirect("/login?error=session_expired" as any);
+  }
+
+  return session;
 };

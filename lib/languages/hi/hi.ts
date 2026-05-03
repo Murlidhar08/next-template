@@ -15,6 +15,11 @@ export default {
         en: "अंग्रेजी (English)",
         hi: "हिन्दी (Hindi)"
     },
+    auth: {
+        msg: {
+            session_expired: "आपका सत्र समाप्त हो गया है। कृपया फिर से लॉगिन करें।",
+        }
+    },
     dashboard: {
         title: "डैशबोर्ड",
     },
