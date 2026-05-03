@@ -1,7 +1,8 @@
 "use client"
 
 import { Currency, ThemeMode } from "@/lib/generated/prisma/enums"
-import { createContext, useContext } from "react"
+import { useTheme } from "next-themes"
+import { createContext, useContext, useEffect, useState } from "react"
 
 interface userSettings {
   currency: Currency,
@@ -25,8 +26,6 @@ export const useUserConfig = () => {
   return ctx
 }
 
-import { useTheme } from "next-themes"
-import { useEffect, useState } from "react"
 
 export function UserConfigProvider({ config, children }: { config: Omit<userSettings, 'setTheme'>, children: React.ReactNode }) {
   const [theme, setThemeState] = useState<ThemeMode>(config.theme)

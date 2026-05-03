@@ -4,7 +4,6 @@ import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { nextCookies } from "better-auth/next-js";
 import { admin as adminPlugin, customSession, lastLoginMethod, twoFactor } from "better-auth/plugins";
-import { cache } from "react";
 
 // Lib
 import { sendMail } from "../nodemailer";
@@ -266,8 +265,8 @@ export const auth = betterAuth({
 });
 
 export type Auth = typeof auth;
-export const getUserSession = cache(async () => {
+export const getUserSession = async () => {
   return await auth.api.getSession({
     headers: await headers()
   });
-});
+};

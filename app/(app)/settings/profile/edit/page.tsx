@@ -17,8 +17,8 @@ import { LoadingSwap } from '@/components/ui/loading-swap'
 import { Skeleton } from '@/components/ui/skeleton'
 import { authClient } from '@/lib/auth/auth-client'
 import { t } from '@/lib/languages/i18n'
-import { getInitials } from '@/utility/commonFunction'
 import { useCurrentUser } from '@/tanstacks/user'
+import { getInitials } from '@/utility/commonFunction'
 
 type ProfileFormValues = {
   name: string
@@ -122,7 +122,10 @@ export default function EditProfilePage() {
       variants={containerVariants}
       className="relative w-full bg-background pb-34"
     >
-      <BackHeader title={t("profile.edit.title", language)} backUrl={'/profile' as any} />
+      <BackHeader
+        title={t("profile.edit.title", language)}
+        backUrl="/settings/profile"
+      />
 
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* Avatar Section */}

@@ -34,7 +34,7 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue,
+  SelectValue
 } from "@/components/ui/select";
 import { signOut, useSession } from "@/lib/auth/auth-client";
 import { envClient } from "@/lib/env.client";
@@ -73,11 +73,28 @@ export default function SettingsPage() {
   if (isPending)
     return <SettingsSkeleton />;
 
-  const currencyLabel: Record<Currency, string> = {
-    USD: "USD ($)",
-    INR: "INR (₹)",
-    EUR: "EUR (€)",
-  };
+  const currencyItems = [
+    { label: "INR (₹)", value: Currency.INR },
+    { label: "USD ($)", value: Currency.USD },
+    { label: "EUR (€)", value: Currency.EUR },
+  ];
+
+  const dateFormatItems = [
+    { label: "DD/MM/YYYY", value: "dd/MM/yyyy" },
+    { label: "MM/DD/YYYY", value: "MM/dd/yyyy" },
+    { label: "YYYY-MM-DD", value: "yyyy-MM-dd" },
+    { label: "DD MMM, YYYY", value: "dd MMM, yyyy" },
+  ];
+
+  const timeFormatItems = [
+    { label: "12 Hour", value: "hh:mm a" },
+    { label: "24 Hour", value: "HH:mm" },
+  ];
+
+  const languageItems = [
+    { label: t("languages.en", language), value: "en" },
+    { label: t("languages.hi", language), value: "hi" },
+  ];
 
   const handleLogout = async () => {
     try {
@@ -115,7 +132,7 @@ export default function SettingsPage() {
         {/* USER */}
         <motion.div
           variants={itemVariants}
-          onClick={() => { router.push("/profile") }}
+          onClick={() => { router.push("/settings/profile") }}
           whileHover={{ y: -2 }}
           whileTap={{ scale: 0.98 }}
           className="flex items-center gap-4 p-5 rounded-3xl bg-card border shadow-sm cursor-pointer transition-shadow hover:shadow-md"
@@ -147,6 +164,7 @@ export default function SettingsPage() {
           <Section title={t("settings.general", language)}>
             <Row icon={DollarSign} label={t("settings.currency", language)}>
               <Select
+                items={currencyItems}
                 value={currency}
                 onValueChange={(value) => {
                   if (!value) return
@@ -160,9 +178,9 @@ export default function SettingsPage() {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="rounded-2xl shadow-2xl">
-                  {Object.values(Currency).map((currency) => (
-                    <SelectItem key={currency} value={currency} className="rounded-lg font-medium">
-                      {currencyLabel[currency]}
+                  {currencyItems.map((item) => (
+                    <SelectItem key={item.value} value={item.value} className="rounded-lg font-medium">
+                      {item.label}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -171,6 +189,7 @@ export default function SettingsPage() {
 
             <Row icon={Calendar} label={t("settings.date_format", language)}>
               <Select
+                items={dateFormatItems}
                 value={dateFormat}
                 onValueChange={(value) => {
                   if (!value) return
@@ -183,16 +202,18 @@ export default function SettingsPage() {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="rounded-2xl shadow-2xl">
-                  <SelectItem value="dd/MM/yyyy" className="rounded-lg font-medium">DD/MM/YYYY</SelectItem>
-                  <SelectItem value="MM/dd/yyyy" className="rounded-lg font-medium">MM/DD/YYYY</SelectItem>
-                  <SelectItem value="yyyy-MM-dd" className="rounded-lg font-medium">YYYY-MM-DD</SelectItem>
-                  <SelectItem value="dd MMM, yyyy" className="rounded-lg font-medium">DD MMM, YYYY</SelectItem>
+                  {dateFormatItems.map((item) => (
+                    <SelectItem key={item.value} value={item.value} className="rounded-lg font-medium">
+                      {item.label}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </Row>
 
             <Row icon={Clock} label={t("settings.time_format", language)}>
               <Select
+                items={timeFormatItems}
                 value={timeFormat}
                 onValueChange={(value) => {
                   if (!value) return
@@ -205,14 +226,18 @@ export default function SettingsPage() {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="rounded-2xl shadow-2xl">
-                  <SelectItem value="hh:mm a" className="rounded-lg font-medium">12 Hour</SelectItem>
-                  <SelectItem value="HH:mm" className="rounded-lg font-medium">24 Hour</SelectItem>
+                  {timeFormatItems.map((item) => (
+                    <SelectItem key={item.value} value={item.value} className="rounded-lg font-medium">
+                      {item.label}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </Row>
 
             <Row icon={Languages} label={t("settings.language", language)}>
               <Select
+                items={languageItems}
                 value={language}
                 onValueChange={(value) => {
                   if (!value) return
@@ -225,8 +250,11 @@ export default function SettingsPage() {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="rounded-2xl shadow-2xl">
-                  <SelectItem value="en" className="rounded-lg font-medium">{t("languages.en", language)}</SelectItem>
-                  <SelectItem value="hi" className="rounded-lg font-medium">{t("languages.hi", language)}</SelectItem>
+                  {languageItems.map((item) => (
+                    <SelectItem key={item.value} value={item.value} className="rounded-lg font-medium">
+                      {item.label}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </Row>

@@ -1,6 +1,5 @@
 import { getUserSession } from "./auth/auth";
 import { Currency, ThemeMode } from "./generated/prisma/enums";
-import { prisma } from "./prisma/prisma";
 
 export const getUserConfig = async () => {
   const session = await getUserSession()
