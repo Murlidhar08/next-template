@@ -1,4 +1,5 @@
 // Packages
+import { passkey } from "@better-auth/passkey";
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { nextCookies } from "better-auth/next-js";
@@ -40,10 +41,6 @@ export const auth = betterAuth({
         required: false
       },
       address: {
-        type: "string",
-        required: false
-      },
-      activeBusinessId: {
         type: "string",
         required: false
       }
@@ -188,6 +185,8 @@ export const auth = betterAuth({
     adminPlugin(),
     nextCookies(),
     twoFactor(),
+    lastLoginMethod(),
+    passkey(),
     customSession(async ({ user, session }) => {
       const dbUser = await prisma.user.findUnique({
         where: { id: user.id },
@@ -253,7 +252,6 @@ export const auth = betterAuth({
         },
       }
     }),
-    lastLoginMethod()
   ],
   databaseHooks: {
     user: {

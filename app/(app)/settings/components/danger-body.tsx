@@ -2,8 +2,8 @@
 
 import { BetterAuthActionButton } from '@/components/auth/better-auth-action-button'
 import { useUserConfig } from '@/components/providers/user-config-provider'
-import { t } from '@/lib/languages/i18n'
 import { authClient } from '@/lib/auth/auth-client'
+import { t } from '@/lib/languages/i18n'
 import { motion } from 'framer-motion'
 import { AlertTriangle, Info, Trash2 } from 'lucide-react'
 
@@ -46,7 +46,7 @@ export function DangerModalBody() {
                 <BetterAuthActionButton
                     requireAreYouSure
                     variant="destructive"
-                    className="w-full h-14 rounded-2xl font-black uppercase tracking-[0.1em] shadow-xl shadow-rose-500/20 hover:shadow-2xl hover:shadow-rose-500/30 transition-all active:scale-[0.98]"
+                    className="w-full h-14 rounded-2xl font-black uppercase tracking-widest shadow-xl shadow-rose-500/20 hover:shadow-2xl hover:shadow-rose-500/30 transition-all active:scale-[0.98]"
                     successMessage={t("danger.delete_success_message", language)}
                     action={() =>
                         authClient.deleteUser({

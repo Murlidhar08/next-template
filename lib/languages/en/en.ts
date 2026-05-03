@@ -52,6 +52,7 @@ export default {
     security: {
         title: "Security",
         secure_access: "Secure Your Access",
+        passkey: "Passkeys",
         two_factor_auth: "Two-Factor Authentication",
         enabled: "Enabled",
         disabled: "Disabled",
@@ -72,6 +73,15 @@ export default {
         min_length_8: "Must be at least 8 characters long",
         enter_current_password: "Please enter your current password",
         recovery_link_sent: "Recovery link dispatched to your email",
+        passkey_description: "Passkeys are a safer and easier replacement for passwords. You can use them to sign in without typing a password.",
+        add_passkey: "Add Passkey",
+        no_passkeys: "No passkeys added yet.",
+        register_passkey: "Register New Passkey",
+        passkey_name: "Passkey Name",
+        passkey_registered: "Passkey registered successfully",
+        passkey_deleted: "Passkey deleted successfully",
+        delete_passkey_title: "Delete Passkey",
+        delete_passkey_desc: "Are you sure you want to delete this passkey?",
     },
     dashboard: {
         title: "Dashboard",

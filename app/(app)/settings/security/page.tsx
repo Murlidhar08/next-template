@@ -1,18 +1,33 @@
 "use client";
 
+import { getListUserAccounts } from "@/actions/user-settings.actions";
+import AppTabs from "@/components/app-tabs";
 import { BackHeader } from "@/components/back-header";
-import { Skeleton } from "@/components/ui/skeleton";
 import { useUserConfig } from "@/components/providers/user-config-provider";
-import { t } from "@/lib/languages/i18n";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useSession } from "@/lib/auth/auth-client";
+import { t } from "@/lib/languages/i18n";
 import { motion } from "framer-motion";
+import { Key, Lock, ShieldCheck } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { SecurityModalBody } from "../components/security-body";
+import { useEffect, useState } from "react";
+import { PasskeyTab } from "./components/passkeyTab";
+import { SecureTab } from "./components/secureTab";
+import { TwoFactorTab } from "./components/twoFactorTab";
 
 export default function SecurityPage() {
     const router = useRouter();
     const { data: session, isPending } = useSession();
     const { language } = useUserConfig();
+    const [hasPasswordAccount, setHasPasswordAccount] = useState<boolean | null>(null);
+
+    useEffect(() => {
+        getListUserAccounts()
+            .then(accounts => {
+                const hasPassAcc = accounts.some(a => a.providerId === "credential")
+                setHasPasswordAccount(hasPassAcc);
+            })
+    }, [])
 
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -24,7 +39,7 @@ export default function SecurityPage() {
         }
     };
 
-    if (isPending) {
+    if (isPending || hasPasswordAccount === null) {
         return <SecuritySkeleton />;
     }
 
@@ -39,11 +54,42 @@ export default function SecurityPage() {
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
-                className="mx-auto max-w-lg p-6 mt-4"
+                className="mx-auto max-w-4xl p-6 mt-4"
             >
-                <SecurityModalBody
-                    email={session?.user.email ?? ""}
-                    isTwoFactorEnabled={session?.user?.twoFactorEnabled ?? false}
+                <AppTabs
+                    defaultTab="password"
+                    tabs={[
+                        {
+                            id: "password",
+                            label: t("security.secure_access", language),
+                            icon: <Lock size={14} />,
+                            content: (
+                                <SecureTab
+                                    email={session?.user.email ?? ""}
+                                    hasPasswordAccount={hasPasswordAccount}
+                                />
+                            )
+                        },
+                        {
+                            id: "2fa",
+                            label: t("security.two_factor_auth", language),
+                            icon: <ShieldCheck size={14} />,
+                            content: (
+                                <TwoFactorTab
+                                    isTwoFactorEnabled={session?.user?.twoFactorEnabled ?? false}
+                                    hasPasswordAccount={hasPasswordAccount}
+                                />
+                            )
+                        },
+                        {
+                            id: "passkey",
+                            label: t("security.passkey", language),
+                            icon: <Key size={14} />,
+                            content: (
+                                <PasskeyTab />
+                            )
+                        }
+                    ]}
                 />
             </motion.div>
         </div>

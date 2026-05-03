@@ -8,7 +8,6 @@ import {
 import { motion } from "framer-motion";
 import {
   Calendar,
-  ChevronLeft,
   ChevronRight,
   Clock,
   DollarSign,
@@ -20,7 +19,6 @@ import {
   LogOut,
   Moon,
   PaintbrushIcon,
-  Plus,
   Skull,
   Sun,
   Terminal
@@ -356,10 +354,8 @@ export default function SettingsPage() {
   );
 }
 
-import { Skeleton } from "@/components/ui/skeleton";
-import { AppHeader } from "@/components/app-header";
-import { Header } from "@/components/header";
 import { FooterButtons } from "@/components/footer-buttons";
+import { Skeleton } from "@/components/ui/skeleton";
 
 function SettingsSkeleton() {
   return (

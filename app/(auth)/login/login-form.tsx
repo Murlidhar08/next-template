@@ -2,7 +2,7 @@
 
 // Packages
 import { AnimatePresence, motion } from "framer-motion";
-import { Eye, EyeOff, Mail, User2 } from "lucide-react";
+import { Eye, EyeOff, Fingerprint, Mail } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -99,6 +99,24 @@ export default function LoginForm({ providers }: LoginFormProps) {
     } catch (err) {
       setError("An error occurred during sign in");
       console.error(err)
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handlePasskeySignIn = async () => {
+    setError("");
+    setLoading(true);
+
+    try {
+      const { error } = await authClient.signIn.passkey();
+      if (error) {
+        setError(error.message || "Passkey authentication failed");
+      } else {
+        router.push("/dashboard");
+      }
+    } catch (err) {
+      setError("An unexpected error occurred during passkey sign in");
     } finally {
       setLoading(false);
     }
@@ -271,6 +289,28 @@ export default function LoginForm({ providers }: LoginFormProps) {
                 <Badge variant="secondary" className="absolute -top-3 -right-2 px-3 py-1 bg-background border-primary/20 text-primary shadow-md">Last used</Badge>
               )}
             </Button>
+            <Button
+              type="button"
+              tabIndex={4}
+              onClick={handlePasskeySignIn}
+              disabled={loading || googleLoading || discordLoading}
+              className="relative rounded-2xl h-14 w-full text-lg font-bold shadow-lg shadow-primary/5 hover:shadow-primary/10 transition-all duration-300 active:scale-[0.98] mt-2 bg-muted/40 border border-muted-foreground/10 text-foreground hover:bg-muted/60 group"
+            >
+              {loading ? (
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
+                  Authenticating...
+                </div>
+              ) : (
+                <div className="flex items-center justify-center gap-3">
+                  <Fingerprint className="size-6 text-primary group-hover:scale-110 transition-transform" />
+                  <span className="tracking-tight">Sign In with Passkey</span>
+                </div>
+              )}
+              {lastLogin === "passkey" && (
+                <Badge variant="secondary" className="absolute -top-3 -right-2 px-3 py-1 bg-background border-primary/20 text-primary shadow-md animate-in fade-in zoom-in duration-300">Last used</Badge>
+              )}
+            </Button>
           </motion.form>
 
           {hasSocialLogin && (
@@ -291,7 +331,7 @@ export default function LoginForm({ providers }: LoginFormProps) {
                   <Button
                     onClick={handleGoogle}
                     variant="outline"
-                    tabIndex={4}
+                    tabIndex={5}
                     disabled={googleLoading || loading || discordLoading}
                     className="relative rounded-2xl h-14 px-6 flex items-center justify-center gap-3 hover:bg-muted/50 border-border/50 transition-all duration-300 active:scale-[0.98] group/google shadow-sm"
                   >
@@ -311,7 +351,7 @@ export default function LoginForm({ providers }: LoginFormProps) {
                   <Button
                     onClick={handleDiscordLogin}
                     variant="outline"
-                    tabIndex={5}
+                    tabIndex={6}
                     disabled={discordLoading || loading || googleLoading}
                     className="relative rounded-2xl h-14 px-6 flex items-center justify-center gap-3 hover:bg-muted/50 border-border/50 transition-all duration-300 active:scale-[0.98] group/discord shadow-sm"
                   >
@@ -335,7 +375,7 @@ export default function LoginForm({ providers }: LoginFormProps) {
         <motion.div variants={itemVariants as any} className="mt-8 pt-8 border-t border-border/50">
           <p className="text-center text-muted-foreground">
             Don&apos;t have an account?{" "}
-            <Link tabIndex={6} href="/signup" className="font-bold text-primary hover:text-primary/80 transition-colors">
+            <Link tabIndex={7} href="/signup" className="font-bold text-primary hover:text-primary/80 transition-colors">
               Get Started
             </Link>
           </p>
@@ -354,7 +394,7 @@ export default function LoginForm({ providers }: LoginFormProps) {
         <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-black/10 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/4" />
 
         {/* Abstract Grid Pattern */}
-        <div className="absolute inset-0 opacity-10 [mask-image:radial-gradient(ellipse_at_center,black,transparent)]"
+        <div className="absolute inset-0 opacity-10 mask-[radial-gradient(ellipse_at_center,black,transparent)]"
           style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
 
         <div className="relative z-10 w-full max-w-2xl text-center text-white space-y-12">
