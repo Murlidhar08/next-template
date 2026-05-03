@@ -110,9 +110,17 @@ export default {
             passkey_name: "पासकी का नाम",
             delete_passkey_title: "पासकी हटाएं",
             delete_passkey_desc: "क्या आप वाकई इस पासकी को हटाना चाहते हैं?",
+            delete_passkey: "पासकी हटाएं",
+            edit_passkey_title: "पासकी का नाम संपादित करें",
+            unnamed_passkey: "बेनामी पासकी",
             msg: {
+                name_required: "पासकी का नाम आवश्यक है",
                 passkey_registered: "पासकी सफलतापूर्वक पंजीकृत की गई",
+                failed_to_register: "पासकी पंजीकृत करने में विफल",
+                passkey_updated: "पासकी का नाम सफलतापूर्वक अपडेट किया गया",
+                failed_to_update: "पासकी का नाम अपडेट करने में विफल",
                 passkey_deleted: "पासकी सफलतापूर्वक हटा दी गई",
+                failed_to_delete: "पासकी हटाने में विफल",
             }
         },
         two_factor: {

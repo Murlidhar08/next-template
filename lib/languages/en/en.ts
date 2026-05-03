@@ -110,9 +110,17 @@ export default {
             passkey_name: "Passkey Name",
             delete_passkey_title: "Delete Passkey",
             delete_passkey_desc: "Are you sure you want to delete this passkey?",
+            delete_passkey: "Delete Passkey",
+            edit_passkey_title: "Edit Passkey Name",
+            unnamed_passkey: "Unnamed Passkey",
             msg: {
+                name_required: "Passkey name is required",
                 passkey_registered: "Passkey registered successfully",
+                failed_to_register: "Failed to register passkey",
+                passkey_updated: "Passkey name updated successfully",
+                failed_to_update: "Failed to update passkey name",
                 passkey_deleted: "Passkey deleted successfully",
+                failed_to_delete: "Failed to delete passkey",
             }
         },
         two_factor: {

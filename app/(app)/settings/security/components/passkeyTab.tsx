@@ -52,7 +52,7 @@ export function PasskeyTab() {
 
     const handleAddPasskey = async () => {
         if (!passkeyName.trim()) {
-            toast.error(t("security.access.required", language));
+            toast.error(t("security.passkeys.msg.name_required", language));
             return;
         }
 
@@ -62,7 +62,7 @@ export function PasskeyTab() {
                 name: passkeyName
             });
             if (error) {
-                toast.error(error.message || t("profile.edit.msg.something_went_wrong", language));
+                toast.error(error.message || t("security.passkeys.msg.failed_to_register", language));
             } else {
                 toast.success(t("security.passkeys.msg.passkey_registered", language));
                 setIsDialogOpen(false);
@@ -70,7 +70,7 @@ export function PasskeyTab() {
                 refetch();
             }
         } catch (err) {
-            toast.error(t("profile.edit.msg.something_went_wrong", language));
+            toast.error(t("security.passkeys.msg.failed_to_register", language));
         } finally {
             setIsAdding(false);
         }
@@ -78,7 +78,7 @@ export function PasskeyTab() {
 
     const handleUpdatePasskey = async () => {
         if (!editingPasskey || !editingPasskey.name.trim()) {
-            toast.error(t("security.access.required", language));
+            toast.error(t("security.passkeys.msg.name_required", language));
             return;
         }
 
@@ -89,15 +89,15 @@ export function PasskeyTab() {
                 name: editingPasskey.name
             });
             if (error) {
-                toast.error(error.message || t("profile.edit.msg.something_went_wrong", language));
+                toast.error(error.message || t("security.passkeys.msg.failed_to_update", language));
             } else {
-                toast.success(t("security.access.msg.password_updated", language));
+                toast.success(t("security.passkeys.msg.passkey_updated", language));
                 setIsEditDialogOpen(false);
                 setEditingPasskey(null);
                 refetch();
             }
         } catch (err) {
-            toast.error(t("profile.edit.msg.something_went_wrong", language));
+            toast.error(t("security.passkeys.msg.failed_to_update", language));
         } finally {
             setIsUpdating(false);
         }
@@ -107,13 +107,13 @@ export function PasskeyTab() {
         try {
             const { error } = await authClient.passkey.deletePasskey({ id });
             if (error) {
-                toast.error(error.message || t("profile.edit.msg.something_went_wrong", language));
+                toast.error(error.message || t("security.passkeys.msg.failed_to_delete", language));
             } else {
                 toast.success(t("security.passkeys.msg.passkey_deleted", language));
                 refetch();
             }
         } catch (err) {
-            toast.error(t("profile.edit.msg.something_went_wrong", language));
+            toast.error(t("security.passkeys.msg.failed_to_delete", language));
         }
     };
 
@@ -173,7 +173,7 @@ export function PasskeyTab() {
                                     id="passkey-name"
                                     value={passkeyName}
                                     onChange={(e) => setPasskeyName(e.target.value)}
-                                    placeholder="e.g. My MacBook Air"
+                                    placeholder={t("security.passkeys.passkey_name", language)}
                                     className="h-14 rounded-2xl bg-muted/20 border-muted-foreground/10 focus:bg-background transition-all"
                                     autoFocus
                                 />
@@ -209,7 +209,7 @@ export function PasskeyTab() {
                                     <Fingerprint size={24} />
                                 </div>
                                 <div className="space-y-1 overflow-hidden">
-                                    <p className="font-bold text-base truncate">{passkey.name || "Unnamed Passkey"}</p>
+                                    <p className="font-bold text-base truncate">{passkey.name || t("security.passkeys.unnamed_passkey", language)}</p>
                                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
                                         <Calendar size={12} />
                                         <span>{format(new Date(passkey.createdAt), "PPP")}</span>
@@ -237,7 +237,7 @@ export function PasskeyTab() {
                                             <div className="h-16 w-16 rounded-[2rem] bg-primary/5 text-primary flex items-center justify-center mb-2">
                                                 <Pencil size={32} />
                                             </div>
-                                            <DialogTitle className="text-2xl font-black">{t("profile.edit.title", language)}</DialogTitle>
+                                            <DialogTitle className="text-2xl font-black">{t("security.passkeys.edit_passkey_title", language)}</DialogTitle>
                                             <DialogDescription className="text-muted-foreground text-base">
                                                 {t("security.passkeys.passkey_name", language)}
                                             </DialogDescription>
@@ -296,7 +296,7 @@ export function PasskeyTab() {
                                                 onClick={() => handleDeletePasskey(passkey.id)}
                                                 className="bg-rose-500 hover:bg-rose-600 rounded-2xl font-bold shadow-lg shadow-rose-100"
                                             >
-                                                {t("admin.user_mng.delete_user", language)}
+                                                {t("security.passkeys.delete_passkey", language)}
                                             </AlertDialogAction>
                                         </AlertDialogFooter>
                                     </AlertDialogContent>

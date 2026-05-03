@@ -28,10 +28,10 @@ export default function ProfilePage() {
     const handleLogout = async () => {
         try {
             await signOut();
-            toast.success(t("profile.logged_out_successfully", language));
-            router.replace("/login");
+            toast.success(t("profile.msg.logged_out_successfully", language));
+            window.location.href = "/login";
         } catch (error) {
-            toast.error(t("profile.failed_to_logout", language));
+            toast.error(t("profile.msg.failed_to_logout", language));
         }
     };
 
