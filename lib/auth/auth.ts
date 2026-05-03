@@ -192,7 +192,6 @@ export const auth = betterAuth({
         select: {
           contactNo: true,
           address: true,
-          activeBusinessId: true,
           twoFactorEnabled: true,
           role: true,
           banned: true,
@@ -221,7 +220,6 @@ export const auth = betterAuth({
         },
       })
 
-      const activeBusinessId = dbUser?.activeBusinessId ?? null
       const settings = dbUser?.userSettings[0];
       const dbSession = dbUser?.sessions[0];
 
@@ -242,7 +240,6 @@ export const auth = betterAuth({
         user: {
           ...user,
           role: dbUser?.role,
-          activeBusinessId: activeBusinessId,
           contactNo: dbUser?.contactNo,
           address: dbUser?.address,
           twoFactorEnabled: dbUser?.twoFactorEnabled ?? false,

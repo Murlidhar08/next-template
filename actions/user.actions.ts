@@ -16,7 +16,6 @@ export async function getCurrentUser() {
             image: true,
             contactNo: true,
             role: true,
-            activeBusinessId: true,
             createdAt: true,
         }
     });

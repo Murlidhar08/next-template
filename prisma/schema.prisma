@@ -36,7 +36,6 @@ model User {
   twoFactorEnabled Boolean?       @default(false)
   contactNo        String?
   address          String?
-  activeBusinessId String?
   sessions         Session[]
   accounts         Account[]
   twofactors       TwoFactor[]
