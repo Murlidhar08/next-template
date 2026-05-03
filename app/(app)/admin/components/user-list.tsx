@@ -32,9 +32,9 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 import { comprehensiveDeleteUser } from "@/actions/admin.actions";
-import { useAdminUsers } from "@/tanstacks/admin";
 import { useUserConfig } from "@/components/providers/user-config-provider";
 import { t } from "@/lib/languages/i18n";
+import { useAdminUsers } from "@/tanstacks/admin";
 
 interface User {
     id: string;
@@ -309,8 +309,13 @@ export function UserList() {
                                     <DropdownMenu>
                                         <DropdownMenuTrigger
                                             render={
-                                                <Button variant="ghost" size="icon" className="h-10 w-10 rounded-xl bg-muted/30 border border-transparent hover:border-primary/20 hover:bg-primary/5 hover:text-primary transition-all duration-300 shadow-inner" disabled={actionLoading === user.id}>
-                                                    <MoreHorizontal size={18} className="opacity-60" />
+                                                <Button 
+                                                    variant="ghost" 
+                                                    size="icon" 
+                                                    className="h-10 w-10 rounded-xl bg-muted/20 border border-transparent hover:border-primary/30 hover:bg-primary/5 hover:text-primary transition-all duration-300" 
+                                                    disabled={actionLoading === user.id}
+                                                >
+                                                    <MoreHorizontal size={18} className="opacity-40 group-hover:opacity-100 transition-opacity" />
                                                 </Button>
                                             }
                                         />
@@ -319,26 +324,26 @@ export function UserList() {
                                                 {/* Role Management */}
                                                 <DropdownMenuItem
                                                     onClick={() => setRole(user.id, user.role === "admin" ? "user" : "admin")}
-                                                    className="rounded-2xl gap-3 p-3 focus:bg-indigo-500/10 focus:text-indigo-600 transition-all duration-300 cursor-pointer active:scale-95"
+                                                    className="group rounded-2xl gap-3 p-2.5 focus:bg-indigo-600 focus:text-white transition-all duration-300 cursor-pointer active:scale-95"
                                                 >
                                                     {user.role === "admin" ? (
                                                         <>
-                                                            <div className="p-2 bg-muted rounded-xl">
-                                                                <UserMinus size={16} className="text-muted-foreground" />
+                                                            <div className="p-2.5 bg-muted rounded-xl group-focus:bg-white/20 transition-colors">
+                                                                <UserMinus size={18} className="text-muted-foreground group-focus:text-white" />
                                                             </div>
                                                             <div className="flex flex-col">
-                                                                <span className="font-bold text-sm">{t("admin.user_mng.demote_to_user", language)}</span>
-                                                                <span className="text-[10px] text-muted-foreground/60">{t("admin.user_mng.demote_desc", language)}</span>
+                                                                <span className="font-bold text-[13px] tracking-tight">{t("admin.user_mng.demote_to_user", language)}</span>
+                                                                <span className="text-[10px] opacity-70 font-medium group-focus:text-white/80">{t("admin.user_mng.demote_desc", language)}</span>
                                                             </div>
                                                         </>
                                                     ) : (
                                                         <>
-                                                            <div className="p-2 bg-indigo-500/10 rounded-xl">
-                                                                <Shield size={16} className="text-indigo-500" />
+                                                            <div className="p-2.5 bg-indigo-500/10 rounded-xl group-focus:bg-white/20 transition-colors">
+                                                                <Shield size={18} className="text-indigo-600 group-focus:text-white" />
                                                             </div>
                                                             <div className="flex flex-col">
-                                                                <span className="font-bold text-sm">{t("admin.user_mng.promote_to_admin", language)}</span>
-                                                                <span className="text-[10px] text-muted-foreground/60">{t("admin.user_mng.promote_desc", language)}</span>
+                                                                <span className="font-bold text-[13px] tracking-tight">{t("admin.user_mng.promote_to_admin", language)}</span>
+                                                                <span className="text-[10px] opacity-70 font-medium group-focus:text-white/80">{t("admin.user_mng.promote_desc", language)}</span>
                                                             </div>
                                                         </>
                                                     )}
@@ -347,54 +352,58 @@ export function UserList() {
                                                 {/* Impersonation */}
                                                 <DropdownMenuItem
                                                     onClick={() => impersonateUser(user.id)}
-                                                    className="rounded-2xl gap-3 p-3 focus:bg-blue-500/10 focus:text-blue-600 transition-all duration-300 cursor-pointer active:scale-95 mt-1"
+                                                    className="group rounded-2xl gap-3 p-2.5 focus:bg-blue-600 focus:text-white transition-all duration-300 cursor-pointer active:scale-95 mt-1"
                                                 >
-                                                    <div className="p-2 bg-blue-500/10 rounded-xl">
-                                                        <UserCircle size={16} className="text-blue-500" />
+                                                    <div className="p-2.5 bg-blue-500/10 rounded-xl group-focus:bg-white/20 transition-colors">
+                                                        <UserCircle size={18} className="text-blue-600 group-focus:text-white" />
                                                     </div>
                                                     <div className="flex flex-col">
-                                                        <span className="font-bold text-sm">{t("admin.user_mng.impersonate", language)}</span>
-                                                        <span className="text-[10px] text-muted-foreground">{t("admin.user_mng.impersonate_desc", language)}</span>
+                                                        <span className="font-bold text-[13px] tracking-tight">{t("admin.user_mng.impersonate", language)}</span>
+                                                        <span className="text-[10px] opacity-70 font-medium group-focus:text-white/80">{t("admin.user_mng.impersonate_desc", language)}</span>
                                                     </div>
                                                 </DropdownMenuItem>
 
                                                 {/* Revoke Sessions */}
                                                 <DropdownMenuItem
                                                     onClick={() => revokeSessions(user.id)}
-                                                    className="rounded-2xl gap-3 p-3 focus:bg-orange-500/10 focus:text-orange-600 transition-all duration-300 cursor-pointer active:scale-95 mt-1"
+                                                    className="group rounded-2xl gap-3 p-2.5 focus:bg-amber-600 focus:text-white transition-all duration-300 cursor-pointer active:scale-95 mt-1"
                                                 >
-                                                    <div className="p-2 bg-orange-500/10 rounded-xl">
-                                                        <RefreshCw size={16} className="text-orange-500" />
+                                                    <div className="p-2.5 bg-amber-500/10 rounded-xl group-focus:bg-white/20 transition-colors">
+                                                        <RefreshCw size={18} className="text-amber-600 group-focus:text-white" />
                                                     </div>
                                                     <div className="flex flex-col">
-                                                        <span className="font-bold text-sm">{t("admin.user_mng.revoke_sessions", language)}</span>
-                                                        <span className="text-[10px] text-muted-foreground/60">{t("admin.user_mng.revoke_desc", language)}</span>
+                                                        <span className="font-bold text-[13px] tracking-tight">{t("admin.user_mng.revoke_sessions", language)}</span>
+                                                        <span className="text-[10px] opacity-70 font-medium group-focus:text-white/80">{t("admin.user_mng.revoke_desc", language)}</span>
                                                     </div>
                                                 </DropdownMenuItem>
 
                                                 {/* Ban Management */}
                                                 <DropdownMenuItem
                                                     onClick={() => user.banned ? unbanUser(user.id) : banUser(user.id)}
-                                                    className="rounded-2xl gap-3 p-3 focus:bg-rose-500/10 focus:text-rose-600 transition-all duration-300 cursor-pointer active:scale-95 mt-1"
+                                                    className={`group rounded-2xl gap-3 p-2.5 transition-all duration-300 cursor-pointer active:scale-95 mt-1 ${
+                                                        user.banned 
+                                                            ? "focus:bg-emerald-600 focus:text-white" 
+                                                            : "focus:bg-rose-600 focus:text-white"
+                                                    }`}
                                                 >
                                                     {user.banned ? (
                                                         <>
-                                                            <div className="p-2 bg-emerald-500/10 rounded-xl">
-                                                                <UserPlus size={16} className="text-emerald-500" />
+                                                            <div className="p-2.5 bg-emerald-500/10 rounded-xl group-focus:bg-white/20 transition-colors">
+                                                                <UserPlus size={18} className="text-emerald-600 group-focus:text-white" />
                                                             </div>
-                                                            <div className="flex flex-col text-emerald-600">
-                                                                <span className="font-bold text-sm">{t("admin.user_mng.unban_user", language)}</span>
-                                                                <span className="text-[10px] text-emerald-500/60">{t("admin.user_mng.unban_desc", language)}</span>
+                                                            <div className="flex flex-col">
+                                                                <span className="font-bold text-[13px] tracking-tight">{t("admin.user_mng.unban_user", language)}</span>
+                                                                <span className="text-[10px] opacity-70 font-medium group-focus:text-white/80">{t("admin.user_mng.unban_desc", language)}</span>
                                                             </div>
                                                         </>
                                                     ) : (
                                                         <>
-                                                            <div className="p-2 bg-rose-500/10 rounded-xl">
-                                                                <Ban size={16} />
+                                                            <div className="p-2.5 bg-rose-500/10 rounded-xl group-focus:bg-white/20 transition-colors">
+                                                                <Ban size={18} className="text-rose-600 group-focus:text-white" />
                                                             </div>
                                                             <div className="flex flex-col">
-                                                                <span className="font-bold text-sm">{t("admin.user_mng.ban_user", language)}</span>
-                                                                <span className="text-[10px] text-rose-500/60">{t("admin.user_mng.ban_desc", language)}</span>
+                                                                <span className="font-bold text-[13px] tracking-tight">{t("admin.user_mng.ban_user", language)}</span>
+                                                                <span className="text-[10px] opacity-70 font-medium group-focus:text-white/80">{t("admin.user_mng.ban_desc", language)}</span>
                                                             </div>
                                                         </>
                                                     )}
@@ -403,14 +412,14 @@ export function UserList() {
                                                 {/* Delete User */}
                                                 <DropdownMenuItem
                                                     onClick={() => deleteUser(user.id)}
-                                                    className="rounded-2xl gap-3 p-3 focus:bg-rose-600 focus:text-white transition-all duration-300 cursor-pointer active:scale-95 mt-1"
+                                                    className="group rounded-2xl gap-3 p-2.5 focus:bg-rose-600 focus:text-white transition-all duration-300 cursor-pointer active:scale-95 mt-1 border border-rose-500/10 hover:border-rose-500/20"
                                                 >
-                                                    <div className="p-2 bg-rose-100 rounded-xl">
-                                                        <UserX size={16} className="text-rose-600" />
+                                                    <div className="p-2.5 bg-rose-500/10 rounded-xl group-focus:bg-white/20 transition-colors">
+                                                        <UserX size={18} className="text-rose-600 group-focus:text-white" />
                                                     </div>
                                                     <div className="flex flex-col">
-                                                        <span className="font-bold text-sm">{t("admin.user_mng.delete_user", language)}</span>
-                                                        <span className="text-[10px] opacity-70">{t("admin.user_mng.delete_desc", language)}</span>
+                                                        <span className="font-bold text-[13px] tracking-tight">{t("admin.user_mng.delete_user", language)}</span>
+                                                        <span className="text-[10px] opacity-70 font-medium group-focus:text-white/80">{t("admin.user_mng.delete_desc", language)}</span>
                                                     </div>
                                                 </DropdownMenuItem>
                                             </DropdownMenuGroup>

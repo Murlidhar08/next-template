@@ -81,7 +81,7 @@ export default function EditProfilePage() {
         promises.push(
           authClient.changeEmail({
             newEmail: data.email,
-            callbackURL: '/profile',
+            callbackURL: '/settings/profile',
           })
         )
       }
@@ -108,7 +108,7 @@ export default function EditProfilePage() {
       }
 
       router.refresh()
-      router.push('/profile' as any)
+      router.push('/settings/profile' as any)
     } catch (error) {
       toast.error(t("profile.edit.msg.something_went_wrong", language));
       console.error('Something went wrong', error);

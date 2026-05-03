@@ -33,7 +33,7 @@ const Header = ({ title, isProfile, leftAction, initialSession }: HeaderProps) =
   const showProfile = isProfile ?? true
 
   const handleRedirect = () => {
-    router.push("/profile")
+    router.push("/settings/profile")
   }
 
   return (
