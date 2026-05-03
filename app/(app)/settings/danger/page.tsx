@@ -7,7 +7,7 @@ import { useUserConfig } from "@/components/providers/user-config-provider";
 import { t } from "@/lib/languages/i18n";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { DangerModalBody } from "../components/danger-body";
+import { DangerModalBody } from "./components/danger-body";
 
 export default function DangerPage() {
     const router = useRouter();

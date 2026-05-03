@@ -10,7 +10,7 @@ import { Session } from "@/lib/generated/prisma/client";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { SessionModalBody } from "../components/session-body";
+import { SessionModalBody } from "./components/session-body";
 
 export default function SessionManagementPage() {
     const router = useRouter();

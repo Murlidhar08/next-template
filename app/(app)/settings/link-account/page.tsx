@@ -10,7 +10,7 @@ import { useSession } from "@/lib/auth/auth-client";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { LinkAccountModalBody } from "../components/link-account-body";
+import { LinkAccountModalBody } from "./components/link-account-body";
 
 type Account = Awaited<ReturnType<typeof auth.api.listUserAccounts>>[number];
 
