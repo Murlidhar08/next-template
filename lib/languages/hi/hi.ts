@@ -193,8 +193,6 @@ export default {
             user_management_title: "उपयोगकर्ता प्रबंधन",
             total_suffix: "कुल",
             no_matches: "कोई मेल नहीं मिला",
-            orgs: "संगठन",
-            rows: "पंक्तियाँ",
             demote_to_user: "उपयोगकर्ता के रूप में पदावनत करें",
             demote_desc: "एडमिन विशेषाधिकार हटाएँ",
             promote_to_admin: "एडमिन के रूप में पदोन्नत करें",

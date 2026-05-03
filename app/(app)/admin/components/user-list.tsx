@@ -295,24 +295,13 @@ export function UserList() {
                                 </div>
 
                                 <div className="flex items-center gap-8">
-                                    <div className="hidden sm:flex items-center gap-8 border-l border-border/30 pl-8 mr-2">
-                                        <div className="flex flex-col items-center group/count">
-                                            <span className="text-xl font-black tabular-nums tracking-tighter leading-none text-foreground/90 group-hover/count:text-primary transition-colors">{user.businessCount || 0}</span>
-                                            <span className="text-[8px] font-black uppercase tracking-[0.2em] text-muted-foreground/40 mt-2">{t("admin.user_mng.orgs", language)}</span>
-                                        </div>
-                                        <div className="flex flex-col items-center group/count">
-                                            <span className="text-xl font-black tabular-nums tracking-tighter leading-none text-foreground/90 group-hover/count:text-emerald-500 transition-colors">{user.transactionCount || 0}</span>
-                                            <span className="text-[8px] font-black uppercase tracking-[0.2em] text-muted-foreground/40 mt-2">{t("admin.user_mng.rows", language)}</span>
-                                        </div>
-                                    </div>
-
                                     <DropdownMenu>
                                         <DropdownMenuTrigger
                                             render={
-                                                <Button 
-                                                    variant="ghost" 
-                                                    size="icon" 
-                                                    className="h-10 w-10 rounded-xl bg-muted/20 border border-transparent hover:border-primary/30 hover:bg-primary/5 hover:text-primary transition-all duration-300" 
+                                                <Button
+                                                    variant="ghost"
+                                                    size="icon"
+                                                    className="h-10 w-10 rounded-xl bg-muted/20 border border-transparent hover:border-primary/30 hover:bg-primary/5 hover:text-primary transition-all duration-300"
                                                     disabled={actionLoading === user.id}
                                                 >
                                                     <MoreHorizontal size={18} className="opacity-40 group-hover:opacity-100 transition-opacity" />
@@ -380,11 +369,10 @@ export function UserList() {
                                                 {/* Ban Management */}
                                                 <DropdownMenuItem
                                                     onClick={() => user.banned ? unbanUser(user.id) : banUser(user.id)}
-                                                    className={`group rounded-2xl gap-3 p-2.5 transition-all duration-300 cursor-pointer active:scale-95 mt-1 ${
-                                                        user.banned 
-                                                            ? "focus:bg-emerald-600 focus:text-white" 
+                                                    className={`group rounded-2xl gap-3 p-2.5 transition-all duration-300 cursor-pointer active:scale-95 mt-1 ${user.banned
+                                                            ? "focus:bg-emerald-600 focus:text-white"
                                                             : "focus:bg-rose-600 focus:text-white"
-                                                    }`}
+                                                        }`}
                                                 >
                                                     {user.banned ? (
                                                         <>

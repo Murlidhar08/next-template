@@ -192,8 +192,6 @@ export default {
             user_management_title: "Users Management",
             total_suffix: "total",
             no_matches: "No matches found",
-            orgs: "Orgs",
-            rows: "Rows",
             demote_to_user: "Demote to User",
             demote_desc: "Remove admin privileges",
             promote_to_admin: "Promote to Admin",
