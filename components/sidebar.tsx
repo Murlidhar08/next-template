@@ -106,8 +106,8 @@ const Sidebar = () => {
       </aside>
 
       {/* ================= Mobile Bottom Nav ================= */}
-      <div className="fixed bottom-4 left-0 right-0 z-50 flex justify-center lg:hidden px-4">
-        <nav className="w-full max-w-md h-18 px-2 py-2 bg-background/80 dark:bg-card/80 backdrop-blur-2xl border border-border shadow-[0_8px_32px_rgba(0,0,0,0.12)] rounded-[2.5rem] flex items-center justify-around relative">
+      <div className="fixed bottom-6 left-0 right-0 z-50 flex justify-center lg:hidden px-6">
+        <nav className="w-full max-w-[400px] h-20 px-3 bg-background/80 dark:bg-card/80 backdrop-blur-3xl border border-border/50 shadow-[0_20px_50px_rgba(0,0,0,0.1)] rounded-[2.5rem] flex items-center justify-center gap-2 relative">
           {navItems.map((item) => {
             const active = pathname?.startsWith(item.href);
 
@@ -193,13 +193,13 @@ function MobileNavItem({ icon, active, href }: MobileNavItemProps) {
   return (
     <Link
       href={href as any}
-      className="flex flex-col items-center justify-center transition-all duration-300 active:scale-95 group h-full w-full relative"
+      className="flex flex-col items-center justify-center transition-all duration-300 active:scale-95 group h-14 flex-1 max-w-[100px] relative"
     >
       <div className={clsx(
-        "relative flex flex-col items-center justify-center h-full w-full transition-all duration-500 rounded-[1.5rem] overflow-hidden",
+        "relative flex flex-col items-center justify-center h-full w-full transition-all duration-500 rounded-3xl overflow-hidden",
         active
-          ? "bg-primary/20 text-primary shadow-[inset_0_0_15px_rgba(var(--primary-rgb),0.15)]"
-          : "bg-transparent text-muted-foreground hover:bg-muted/15"
+          ? "bg-primary/10 text-primary"
+          : "bg-transparent text-muted-foreground hover:bg-muted/10"
       )}>
         {/* ICON with smooth transition */}
         <div className="relative w-6 h-6 flex items-center justify-center">

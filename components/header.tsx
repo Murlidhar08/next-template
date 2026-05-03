@@ -77,7 +77,7 @@ const Header = ({ title, isProfile, leftAction, initialSession }: HeaderProps) =
               layoutId="header-title"
               transition={{ type: "spring", bounce: 0.3 }}
             >
-              <h1 className="text-xl font-black -tracking-normal sm:text-2xl lg:text-3xl bg-linear-to-br from-foreground to-primary/80 bg-clip-text text-transparent">
+              <h1 className="text-xl font-black tracking-normal sm:text-2xl lg:text-3xl bg-linear-to-br from-foreground to-primary/80 bg-clip-text text-transparent">
                 {title}
               </h1>
             </motion.div>
@@ -108,3 +108,4 @@ const Header = ({ title, isProfile, leftAction, initialSession }: HeaderProps) =
 }
 
 export { Header }
+
