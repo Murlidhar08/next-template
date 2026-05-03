@@ -5,11 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
-import { Fingerprint, Globe, Layout, Mail, PenLine } from "lucide-react";
+import { Fingerprint, Globe, Mail, PenLine } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -100,8 +99,8 @@ export function AppSettingsForm({ initialData }: AppSettingsFormProps) {
 
     return (
         <form onSubmit={form.handleSubmit(onSubmit as any)} className="space-y-10">
-            {/* General & Branding Card */}
-            <ConfigCard
+            {/* TODO: PENDING General & Branding Card */}
+            {/* <ConfigCard
                 title={t("admin.app_config.general_branding", language)}
                 description={t("admin.app_config.general_branding_desc", language)}
                 icon={<Layout className="w-5 h-5" />}
@@ -122,7 +121,7 @@ export function AppSettingsForm({ initialData }: AppSettingsFormProps) {
                         placeholder={t("admin.app_config.description_placeholder", language)}
                     />
                 </div>
-            </ConfigCard>
+            </ConfigCard> */}
 
             {/* Email Server Card */}
             <ConfigCard
