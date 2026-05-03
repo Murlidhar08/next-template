@@ -202,9 +202,6 @@ export default function LoginForm({ providers }: LoginFormProps) {
             <h2 className="text-3xl font-bold tracking-tight mb-3">
               Welcome back
             </h2>
-            <p className="text-muted-foreground text-lg font-medium">
-              Access your financial dashboard
-            </p>
           </motion.div>
 
           <motion.form variants={itemVariants as any} onSubmit={handleSubmit} className="space-y-5">
