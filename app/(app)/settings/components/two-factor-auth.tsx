@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input"
 import { LoadingSwap } from "@/components/ui/loading-swap"
 
 import { authClient } from "@/lib/auth/auth-client"
+import { envClient } from "@/lib/env.client"
 import dynamic from "next/dynamic"
 import { toast } from "sonner"
 
@@ -66,6 +67,7 @@ export function TwoFactorAuth({ isEnabled }: { isEnabled: boolean }) {
   async function enable2FA(values: PasswordForm) {
     const result = await authClient.twoFactor.enable({
       password: values.password,
+      issuer: envClient.NEXT_PUBLIC_APP_NAME,
     })
 
     if (result.error) {
@@ -128,7 +130,7 @@ export function TwoFactorAuth({ isEnabled }: { isEnabled: boolean }) {
 
       <Button
         type="submit"
-        className={`w-full h-14 rounded-2xl font-black uppercase tracking-[0.1em] shadow-xl transition-all active:scale-[0.98] ${isEnabled
+        className={`w-full h-14 rounded-2xl font-black uppercase tracking-widest shadow-xl transition-all active:scale-[0.98] ${isEnabled
           ? "bg-rose-500 hover:bg-rose-600 text-white shadow-rose-500/20"
           : "bg-primary hover:bg-primary/90 text-primary-foreground shadow-primary/20"
           }`}
@@ -260,7 +262,7 @@ function QRCodeVerify({
         )}
       </div>
 
-      <Button type="submit" className="w-full h-14 rounded-2xl font-black uppercase tracking-[0.1em] shadow-xl shadow-primary/20 hover:shadow-2xl transition-all active:scale-[0.98]" disabled={isSubmitting}>
+      <Button type="submit" className="w-full h-14 rounded-2xl font-black uppercase tracking-widest shadow-xl shadow-primary/20 hover:shadow-2xl transition-all active:scale-[0.98]" disabled={isSubmitting}>
         <LoadingSwap isLoading={isSubmitting}>
           Establish Security Link
         </LoadingSwap>
