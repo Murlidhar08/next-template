@@ -1,7 +1,7 @@
 "use client";
 
 import { Currency } from "@/lib/generated/prisma/enums";
-import { formatAmount } from "@/utility/transaction";
+import { formatCurrencyAmount } from "@/utility/commonFunction";
 import { animate, motion, useMotionValue, useTransform } from "framer-motion";
 import { useEffect } from "react";
 
@@ -15,7 +15,7 @@ interface CountUpProps {
 
 export function CountUp({ value, currency, duration = 0.2, delay = 0, isLoading = false }: CountUpProps) {
   const count = useMotionValue(0);
-  const rounded = useTransform(count, (latest) => formatAmount(latest, currency));
+  const rounded = useTransform(count, (latest) => formatCurrencyAmount(latest, currency));
 
   useEffect(() => {
     if (isLoading) return;

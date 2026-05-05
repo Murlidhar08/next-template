@@ -7,6 +7,10 @@ export function formatAmount(amount?: number | null) {
     return Math.abs(amount).toLocaleString("en-IN");
 }
 
+export function formatCurrencyAmount(amount?: number | null, currency?: Currency): string {
+    return `${getCurrencySymbol(currency)} ${formatAmount(amount)}`;
+}
+
 export function getInitials(name?: string | null) {
     if (!name) return "?";
 

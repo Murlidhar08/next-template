@@ -26,7 +26,7 @@ export default async function AdminPage() {
     );
 }
 
-export function Restricted({ language }: { language: string }) {
+function Restricted({ language }: { language: string }) {
     return (
         <div className="flex-1 flex flex-col items-center justify-center p-8 text-center space-y-8 animate-in fade-in zoom-in duration-500">
             <div className="relative">
