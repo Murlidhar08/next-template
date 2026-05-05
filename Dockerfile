@@ -1,0 +1,90 @@
+# syntax=docker.io/docker/dockerfile:1
+
+FROM node:24.11.1-alpine AS base
+
+# ---------- Dependencies ----------
+FROM base AS deps
+RUN apk add --no-cache libc6-compat
+WORKDIR /app
+
+COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* .npmrc* ./
+COPY prisma/schema.prisma ./prisma/
+
+RUN \
+  if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
+  elif [ -f package-lock.json ]; then npm ci; \
+  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i --frozen-lockfile; \
+  else echo "Lockfile not found." && exit 1; \
+  fi
+
+# ---------- Prisma Generate ----------
+FROM deps AS prisma
+WORKDIR /app
+COPY prisma ./prisma
+
+# ---------- Build ----------
+FROM base AS builder
+WORKDIR /app
+
+ENV NODE_ENV="production"
+ENV DATABASE_URL="postgresql://user:pass@localhost:5432/settlr"
+ENV NEXT_PUBLIC_APP_NAME="Settlr"
+ENV NEXT_PUBLIC_APP_DESCRIPTION="Settlr for managing personal finance"
+ENV BETTER_AUTH_SECRET="build-secret"
+ENV BETTER_AUTH_URL="http://localhost:3000"
+ENV BETTER_AUTH_TRUSTED_ORIGINS="http://localhost:3000,http://*.localhost:3000"
+ENV SMTP_HOST="<mail.example.com>"
+ENV SMTP_PORT="587"
+ENV SMTP_USER="<USER@example.com>"
+ENV SMTP_PASS="<USER_PASSWORD>"
+ENV SMTP_SECURE="false"
+ENV FROM_EMAIL="<settlr@example.com>"
+ENV GOOGLE_CLIENT_ID="build-google-client-id"
+ENV GOOGLE_CLIENT_SECRET="build-google-client-secret"
+ENV DISCORD_CLIENT_ID="build-discord-client-id"
+ENV DISCORD_CLIENT_SECRET="build-discord-client-secret"
+
+COPY --from=prisma /app/node_modules ./node_modules
+COPY --from=prisma /app/prisma ./prisma
+COPY . .
+
+# Next.js collects completely anonymous telemetry data about general usage.
+# Learn more here: https://nextjs.org/telemetry
+# Uncomment the following line in case you want to disable telemetry during the build.
+# ENV NEXT_TELEMETRY_DISABLED=1
+
+RUN \
+  if [ -f yarn.lock ]; then yarn run build; \
+  elif [ -f package-lock.json ]; then npm run production-build; \
+  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm run build; \
+  else echo "Lockfile not found." && exit 1; \
+  fi
+
+# ---------- Runtime ----------
+FROM base AS runner
+WORKDIR /app
+
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+# Public assets
+COPY --from=builder /app/public ./public
+
+# Automatically leverage output traces to reduce image size
+# https://nextjs.org/docs/advanced-features/output-file-tracing
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+# 🔥 REQUIRED: Prisma schema at runtime
+COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
+
+USER nextjs
+
+EXPOSE 3000
+
+ENV PORT=3000
+
+# server.js is created by next build from the standalone output
+# https://nextjs.org/docs/pages/api-reference/config/next-config-js/output
+ENV HOSTNAME="0.0.0.0"
+CMD ["sh", "-c", "npm run db:deploy && npm start2"]

@@ -9,6 +9,7 @@
     "dev": "next dev --turbopack",
     "build": "next build --webpack",
     "start": "next start",
+    "start2": "node server.js",
     "lint": "eslint",
     "postinstall": "prisma generate",
     "production-deploy": "npm run postinstall && prisma migrate deploy && npm run build",
@@ -21,6 +22,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "pg": "^8.20.0",
     "@base-ui/react": "^1.4.1",
     "@better-auth/passkey": "^1.6.9",
     "@better-auth/prisma-adapter": "^1.6.9",
@@ -43,19 +45,19 @@
     "next-themes": "^0.4.6",
     "nextjs-toploader": "^3.9.17",
     "nodemailer": "^8.0.7",
-    "prisma": "^7.8.0",
     "react": "^19.2.5",
     "react-day-picker": "^9.14.0",
     "react-dom": "^19.2.5",
     "react-hook-form": "^7.75.0",
     "react-qr-code": "^2.0.21",
-    "recharts": "^3.8.1",
     "sharp": "^0.34.5",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.5.0",
     "zod": "^4.4.2"
   },
   "devDependencies": {
+    "@types/pg": "^8.20.0",
+    "prisma": "^7.8.0",
     "@eslint/compat": "^2.0.5",
     "@eslint/js": "^10.0.1",
     "@next/bundle-analyzer": "^16.2.4",
