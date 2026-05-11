@@ -5,7 +5,7 @@ services:
     container_name: postgres_db
     restart: always
     env_file:
-      - .env.pod
+      - .env.production
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
@@ -24,7 +24,7 @@ services:
     build: .
     container_name: app-next
     env_file:
-      - .env.pod
+      - .env.production
     ports:
       - "3000:3000"
     networks:
@@ -46,7 +46,7 @@ services:
     ports:
       - "5555:5555"
     env_file:
-      - .env.pod
+      - .env.production
     environment: 
       DATABASE_URL: ${DATABASE_URL}
     networks: 
@@ -65,7 +65,7 @@ services:
       postgres_db:
         condition: service_healthy
     env_file:
-      - .env.pod
+      - .env.production
     environment:
       DATABASE_URL: ${DATABASE_URL}
     networks:
