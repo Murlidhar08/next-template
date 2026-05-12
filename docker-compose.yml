@@ -21,7 +21,14 @@ services:
       retries: 20
 
   app:
-    build: .
+    build:
+      context: .
+      args:
+        - NEXT_PUBLIC_APP_NAME=${NEXT_PUBLIC_APP_NAME}
+        - NEXT_PUBLIC_APP_DESCRIPTION=${NEXT_PUBLIC_APP_DESCRIPTION}
+        - BETTER_AUTH_URL=${BETTER_AUTH_URL}
+        - DATABASE_URL=${DATABASE_URL}
+        - BETTER_AUTH_SECRET=${BETTER_AUTH_SECRET}
     container_name: app-next
     env_file:
       - .env.production
@@ -33,7 +40,7 @@ services:
     depends_on:
       postgres_db:
         condition: service_healthy
-      settlr-migrate:
+      app-migrate:
         condition: service_completed_successfully
 
   prisma-studio:
@@ -55,9 +62,9 @@ services:
       postgres_db: 
         condition: service_healthy
 
-  settlr-migrate:
+  app-migrate:
     image: node:24.15.0
-    container_name: settlr-migrate
+    container_name: app-migrate
     working_dir: /app
     volumes:
       - .:/app

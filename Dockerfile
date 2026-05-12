@@ -26,23 +26,18 @@ COPY prisma ./prisma
 FROM base AS builder
 WORKDIR /app
 
-ENV NODE_ENV="production"
-ENV DATABASE_URL="postgresql://user:pass@localhost:5432/settlr"
-ENV NEXT_PUBLIC_APP_NAME="Settlr"
-ENV NEXT_PUBLIC_APP_DESCRIPTION="Settlr for managing personal finance"
-ENV BETTER_AUTH_SECRET="f3f1e9c8b7a6d5e4f3a2b1c0d9e8f7a6"
-ENV BETTER_AUTH_URL="http://localhost:3000"
-ENV BETTER_AUTH_TRUSTED_ORIGINS="http://localhost:3000,http://*.localhost:3000"
-ENV SMTP_HOST="<mail.example.com>"
-ENV SMTP_PORT="587"
-ENV SMTP_USER="<USER@example.com>"
-ENV SMTP_PASS="<USER_PASSWORD>"
-ENV SMTP_SECURE="false"
-ENV FROM_EMAIL="<settlr@example.com>"
-ENV GOOGLE_CLIENT_ID="build-google-client-id"
-ENV GOOGLE_CLIENT_SECRET="build-google-client-secret"
-ENV DISCORD_CLIENT_ID="build-discord-client-id"
-ENV DISCORD_CLIENT_SECRET="build-discord-client-secret"
+# Environment variables needed for build
+ARG NEXT_PUBLIC_APP_NAME
+ENV NEXT_PUBLIC_APP_NAME=$NEXT_PUBLIC_APP_NAME
+ARG NEXT_PUBLIC_APP_DESCRIPTION
+ENV NEXT_PUBLIC_APP_DESCRIPTION=$NEXT_PUBLIC_APP_DESCRIPTION
+ARG BETTER_AUTH_URL
+ENV BETTER_AUTH_URL=$BETTER_AUTH_URL
+ARG DATABASE_URL
+ENV DATABASE_URL=$DATABASE_URL
+ARG BETTER_AUTH_SECRET
+ENV BETTER_AUTH_SECRET=$BETTER_AUTH_SECRET
+ENV NODE_ENV=production
 
 COPY --from=prisma /app/node_modules ./node_modules
 COPY --from=prisma /app/prisma ./prisma
