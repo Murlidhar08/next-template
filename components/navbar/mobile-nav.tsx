@@ -4,23 +4,41 @@ import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import { TabItem } from "./tab-item";
 import { useNavItems } from "./use-nav-items";
 
-export default function MobileNav() {
+interface MobileNavProps {
+    navItems?: (TabItem & { active?: boolean })[];
+    onChange?: (value: string) => void;
+}
+
+export default function MobileNav({ navItems: propNavItems, onChange }: MobileNavProps) {
     const pathname = usePathname();
-    const navItems = useNavItems();
+    const defaultNavItems = useNavItems();
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    const navItems = propNavItems && propNavItems.length > 0 ? propNavItems : defaultNavItems;
+
+    if (!mounted) return null;
 
     return (
         <>
-
             <div className="fixed bottom-6 left-0 right-0 z-50 flex justify-center lg:hidden px-6">
                 <nav className="w-full max-w-[400px] h-20 px-3 bg-background/80 dark:bg-card/80 backdrop-blur-3xl border border-border/50 shadow-[0_20px_50px_rgba(0,0,0,0.1)] rounded-[2.5rem] flex items-center justify-center gap-2 relative">
                     {navItems.map((item) => {
-                        const active = pathname?.startsWith(item.href);
+                        const active = item.active !== undefined
+                            ? item.active
+                            : (item.href ? pathname?.startsWith(item.href) : false);
 
                         return (
                             <MobileNavItem
-                                key={item.href}
+                                onChange={onChange}
+                                key={item.id}
                                 {...item}
                                 active={active}
                             />
@@ -36,16 +54,29 @@ export default function MobileNav() {
 }
 
 interface MobileNavItemProps {
-    icon: React.ReactNode;
+    icon?: React.ReactNode;
     label: string;
     active: boolean;
-    href: string;
+    href?: string;
+    onChange?: (value: string) => void;
 }
 
-function MobileNavItem({ icon, active, href }: MobileNavItemProps) {
+function MobileNavItem({ icon, label, active, href, onChange }: MobileNavItemProps) {
+    const isHash = href?.startsWith("#");
+    const handleClick = (e: React.MouseEvent) => {
+        if (isHash && href && onChange) {
+            e.preventDefault();
+            onChange(href.replace("#", ""));
+        } else if (onChange) {
+            onChange(href || "");
+        }
+    };
+
     return (
         <Link
-            href={href as any}
+            href={(href || "#") as any}
+            onClick={handleClick}
+            aria-label={label}
             className="flex flex-col items-center justify-center transition-all duration-300 active:scale-95 group h-14 flex-1 max-w-[100px] relative"
         >
             <div className={clsx(

@@ -7,12 +7,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { TabItem } from "./tab-item";
 import { useNavItems } from "./use-nav-items";
 
-export default function DesktopNav() {
+export default function DesktopNav({ navItems: propNavItems }: { navItems?: TabItem[] }) {
     const pathname = usePathname();
     const [collapsed, setCollapsed] = useState(false);
-    const navItems = useNavItems();
+    const defaultNavItems = useNavItems();
+    const navItems = propNavItems && propNavItems.length > 0 ? propNavItems : defaultNavItems;
 
     return (
         <>
@@ -70,6 +72,7 @@ export default function DesktopNav() {
                             return (
                                 <DesktopNavItem
                                     key={item.href}
+                                    href={item.href as string}
                                     {...item}
                                     active={active}
                                     collapsed={collapsed}
@@ -86,15 +89,15 @@ export default function DesktopNav() {
     );
 }
 
-interface desktopNavProps {
-    icon: React.ReactNode;
+interface DesktopNavItemProps {
+    icon?: React.ReactNode;
     label: string;
     active: boolean;
     collapsed: boolean;
     href: string;
 }
 
-function DesktopNavItem({ icon, label, active, collapsed, href }: desktopNavProps) {
+function DesktopNavItem({ icon, label, active, collapsed, href }: DesktopNavItemProps) {
     return (
         <Link
             key={href}

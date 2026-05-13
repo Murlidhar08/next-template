@@ -3,16 +3,10 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
-import { ReactNode, Suspense, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { LoadingScreen } from "./loading-screen";
-
-export interface TabItem {
-    id: string;
-    label: string;
-    badgeCount?: number;
-    icon?: ReactNode;
-    content: ReactNode;
-}
+import MobileNav from "./navbar/mobile-nav";
+import { TabItem } from "./navbar/tab-item";
 
 interface AppTabsProps {
     tabs: TabItem[];
@@ -80,8 +74,8 @@ export default function AppTabs({ tabs, defaultTab, className = "w-full" }: AppT
 
     return (
         <Tabs value={activeTab} onValueChange={handleTabChange} className={cn("w-full", className)}>
-            {/* Nav Container */}
-            <div className="mb-8">
+            {/* Nav Desktop Container */}
+            <div className="mb-8 hidden lg:block">
                 <TabsList
                     ref={tabsListRef}
                     onMouseDown={handleMouseDown}
@@ -126,6 +120,16 @@ export default function AppTabs({ tabs, defaultTab, className = "w-full" }: AppT
                     })}
                 </TabsList>
             </div>
+
+            {/* Mobile Nav */}
+            <MobileNav
+                onChange={handleTabChange}
+                navItems={tabs.map(tab => ({
+                    ...tab,
+                    href: `#${tab.id}`,
+                    active: activeTab === tab.id
+                }))}
+            />
 
             {/* Tab content */}
             {tabs.map((tab) => (
