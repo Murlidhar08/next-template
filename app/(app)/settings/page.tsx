@@ -288,69 +288,60 @@ export default function SettingsPage() {
         {/* APPEARANCE */}
         <motion.div variants={itemVariants}>
           <Section title={t("settings.appearance", language)}>
-            <div className="flex items-center justify-between px-5 h-20 w-full group">
-              <div className="flex items-center justify-between h-full gap-4 flex-1">
-                <div className="flex items-center gap-4">
-                  <div className="h-10 w-10 rounded-2xl bg-primary/10 text-primary flex items-center justify-center transition-transform group-hover:rotate-12">
-                    <PaintbrushIcon size={18} />
-                  </div>
-                  <p className="flex-1 font-bold text-base">{t("settings.theme_mode", language)}</p>
-                </div>
-
-                <div className="flex gap-1 bg-muted/50 rounded-2xl p-1.5 border-2 border-transparent focus-within:border-primary/10">
-                  {[
-                    { id: ThemeMode.AUTO, icon: Laptop, label: t("settings.auto", language) },
-                    { id: ThemeMode.LIGHT, icon: Sun, label: t("settings.light", language) },
-                    { id: ThemeMode.DARK, icon: Moon, label: t("settings.dark", language) },
-                  ].map((mode) => (
-                    <Button
-                      key={mode.id}
-                      variant={theme === mode.id ? "secondary" : "ghost"}
-                      size="sm"
-                      className={cn(
-                        "gap-2 rounded-xl text-xs font-black uppercase tracking-wider transition-all px-4 h-9",
-                        theme === mode.id && "bg-background shadow-lg scale-100 text-primary",
-                        theme !== mode.id && "opacity-60 hover:opacity-100"
-                      )}
-                      onClick={async () => {
-                        setTheme(mode.id);
-                        await upsertUserSettings({ theme: mode.id });
-                      }}
-                    >
-                      <mode.icon size={15} />
-                      <span className="hidden sm:inline">{mode.label}</span>
-                    </Button>
-                  ))}
-                </div>
+            <Row icon={PaintbrushIcon} label={t("settings.theme_mode", language)}>
+              <div className="flex gap-1 bg-muted/50 rounded-2xl p-1.5 border-2 border-transparent focus-within:border-primary/10">
+                {[
+                  { id: ThemeMode.AUTO, icon: Laptop, label: t("settings.auto", language) },
+                  { id: ThemeMode.LIGHT, icon: Sun, label: t("settings.light", language) },
+                  { id: ThemeMode.DARK, icon: Moon, label: t("settings.dark", language) },
+                ].map((mode) => (
+                  <Button
+                    key={mode.id}
+                    variant={theme === mode.id ? "secondary" : "ghost"}
+                    size="sm"
+                    className={cn(
+                      "gap-2 rounded-xl text-xs font-black uppercase tracking-wider transition-all px-4 h-9",
+                      theme === mode.id && "bg-background shadow-lg scale-100 text-primary",
+                      theme !== mode.id && "opacity-60 hover:opacity-100"
+                    )}
+                    onClick={async () => {
+                      setTheme(mode.id);
+                      await upsertUserSettings({ theme: mode.id });
+                    }}
+                  >
+                    <mode.icon size={15} />
+                    <span className="hidden sm:inline">{mode.label}</span>
+                  </Button>
+                ))}
               </div>
-            </div>
+            </Row>
           </Section>
         </motion.div>
 
         {/* SECURITY */}
         <motion.div variants={itemVariants}>
           <Section title={t("settings.security_privacy", language)}>
-            <NavigationRow
+            <Row
               icon={Link2Icon}
               label={t("settings.connected_accounts", language)}
-              onClick={() => router.push("/settings/link-account" as any)}
+              href="/settings/link-account"
             />
-            <NavigationRow
+            <Row
               icon={LockKeyhole}
               label={t("settings.safety_security", language)}
-              onClick={() => router.push("/settings/security" as any)}
+              href="/settings/security"
             />
-            <NavigationRow
+            <Row
               icon={KeyRoundIcon}
               label={t("settings.active_sessions", language)}
-              onClick={() => router.push("/settings/session-management" as any)}
+              href="/settings/session-management"
             />
-            <NavigationRow
+            <Row
               icon={Skull}
               label={t("settings.danger_zone", language)}
               labelClassName="text-rose-600"
               iconContainerClassName="bg-rose-100 text-rose-600"
-              onClick={() => router.push("/settings/danger" as any)}
+              href="/settings/danger"
             />
           </Section>
         </motion.div>
@@ -423,34 +414,6 @@ function SettingsSkeleton() {
   );
 }
 
-function NavigationRow({
-  icon: Icon,
-  label,
-  onClick,
-  labelClassName,
-  iconContainerClassName
-}: {
-  icon: any,
-  label: string,
-  onClick: () => void,
-  labelClassName?: string,
-  iconContainerClassName?: string
-}) {
-  return (
-    <motion.button
-      whileTap={{ scale: 0.98 }}
-      onClick={onClick}
-      className="w-full flex items-center gap-4 px-4 h-16 text-left"
-    >
-      <div className={cn("h-8 w-8 rounded-full bg-primary/10 text-primary flex items-center justify-center", iconContainerClassName)}>
-        <Icon size={16} />
-      </div>
-      <p className={cn("flex-1 font-semibold", labelClassName)}>{label}</p>
-      <ChevronRight className="text-muted-foreground" />
-    </motion.button>
-  );
-}
-
 
 /* ---------------- components ---------------- */
 
@@ -467,19 +430,23 @@ function Section({ title, children }: { title: string; children: React.ReactNode
   );
 }
 
-function Row({ icon: Icon, label, children }: {
-  icon: React.ElementType; label: string; children: React.ReactNode
+function Row({ icon: Icon, label, labelClassName, iconContainerClassName, href, children }: {
+  icon: React.ElementType; label: string; labelClassName?: string; iconContainerClassName?: string; href?: string; children?: React.ReactNode
 }) {
+  const router = useRouter();
   return (
     <motion.div
       whileTap={{ scale: 0.98 }}
-      className="flex items-center gap-4 px-4 h-16"
+      className="flex items-center gap-4 px-4 h-16 group cursor-pointer rounded-xl hover:bg-primary/10"
+      onClick={() => { if (href) router.push(href as any) }}
     >
-      <div className="h-8 w-8 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+      <div className={cn("h-8 w-8 rounded-full bg-primary/10 text-primary flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all", iconContainerClassName)}>
         <Icon size={16} />
       </div>
-      <p className="flex-1 font-semibold">{label}</p>
-      {children}
+      <p className={cn("flex-1 font-semibold text-lg", labelClassName)}>{label}</p>
+      {
+        href ? <ChevronRight className="text-muted-foreground" /> : children ? children : null
+      }
     </motion.div>
   );
 }
