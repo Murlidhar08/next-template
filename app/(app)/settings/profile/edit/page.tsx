@@ -19,27 +19,13 @@ import { authClient } from '@/lib/auth/auth-client'
 import { t } from '@/lib/languages/i18n'
 import { useCurrentUser } from '@/tanstacks/user'
 import { getInitials } from '@/utility/commonFunction'
+import { containerVariants, itemVariants } from '@/lib/animations'
 
 type ProfileFormValues = {
   name: string
   email: string
   contactNo?: string
 }
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1
-    }
-  }
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 15 },
-  visible: { opacity: 1, y: 0 }
-};
 
 export default function EditProfilePage() {
   const router = useRouter()
@@ -116,84 +102,85 @@ export default function EditProfilePage() {
   }
 
   return (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      variants={containerVariants}
-      className="relative w-full bg-background pb-34"
-    >
+    <div className="w-full bg-background pb-34">
       <BackHeader
-        title={t("profile.edit.title", language)}
-        backUrl="/settings/profile"
+        title={t("profile.title", language)}
+        backUrl="/settings"
       />
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="mx-auto max-w-4xl mt-6 space-y-8 px-6"
+      >
+        <form onSubmit={handleSubmit(onSubmit)}>
+          {/* Avatar Section */}
+          <motion.section variants={itemVariants} className="flex flex-col items-center py-10 relative">
+            <div className="relative group">
+              <Avatar className="h-32 w-32 ring-4 ring-background shadow-2xl transition-transform duration-500 group-hover:scale-105">
+                <AvatarImage src={user?.image || ''} />
+                <AvatarFallback className="text-3xl font-black bg-primary/10 text-primary">
+                  {getInitials(user?.name)}
+                </AvatarFallback>
+              </Avatar>
+              <motion.button
+                type="button"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                className="absolute bottom-1 right-1 flex h-10 w-10 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-lg cursor-pointer border-4 border-background"
+              >
+                <Camera className="h-5 w-5" />
+              </motion.button>
+              <div className="absolute inset-0 rounded-full bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-2xl -z-10" />
+            </div>
+            <p className="mt-4 text-xs font-black uppercase tracking-[0.2em] text-primary/60">{t("profile.edit.upload_new_avatar", language)}</p>
+          </motion.section>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
-        {/* Avatar Section */}
-        <motion.section variants={itemVariants} className="flex flex-col items-center py-10 relative">
-          <div className="relative group">
-            <Avatar className="h-32 w-32 ring-4 ring-background shadow-2xl transition-transform duration-500 group-hover:scale-105">
-              <AvatarImage src={user?.image || ''} />
-              <AvatarFallback className="text-3xl font-black bg-primary/10 text-primary">
-                {getInitials(user?.name)}
-              </AvatarFallback>
-            </Avatar>
-            <motion.button
-              type="button"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              className="absolute bottom-1 right-1 flex h-10 w-10 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-lg cursor-pointer border-4 border-background"
+          {/* Form Fields */}
+          <motion.section variants={itemVariants} className="mx-auto flex w-full max-w-lg flex-col gap-6 px-6">
+            <Field
+              label={t("profile.edit.name_label", language)}
+              icon={User}
+              registration={register('name', { required: t("profile.edit.msg.name_required", language) })}
+            />
+
+            <Field
+              label={t("profile.phone_number", language)}
+              icon={Phone}
+              registration={register('contactNo')}
+              placeholder={t("profile.edit.phone_placeholder", language)}
+            />
+
+            <Field
+              label={t("profile.email_address", language)}
+              icon={Mail}
+              type="email"
+              disabled={true}
+              registration={register('email', { required: t("profile.edit.msg.email_required", language) })}
+            />
+            <div className="flex items-center gap-2 p-4 rounded-2xl bg-muted/30 border border-dashed border-muted-foreground/20">
+              <CheckCircle2 size={16} className="text-muted-foreground" />
+              <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">{t("profile.edit.msg.email_verification_notice", language)}</p>
+            </div>
+          </motion.section>
+
+          {/* Submit */}
+          <FooterButtons>
+            <Button
+              type="submit"
+              className="h-14 w-auto p-8 rounded-full gap-3 font-semibold uppercase bg-primary text-white shadow-lg shadow-primary/30 transition-all hover:bg-primary/90 hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 py-2"
             >
-              <Camera className="h-5 w-5" />
-            </motion.button>
-            <div className="absolute inset-0 rounded-full bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-2xl -z-10" />
-          </div>
-          <p className="mt-4 text-xs font-black uppercase tracking-[0.2em] text-primary/60">{t("profile.edit.upload_new_avatar", language)}</p>
-        </motion.section>
-
-        {/* Form Fields */}
-        <motion.section variants={itemVariants} className="mx-auto flex w-full max-w-lg flex-col gap-6 px-6">
-          <Field
-            label={t("profile.edit.name_label", language)}
-            icon={User}
-            registration={register('name', { required: t("profile.edit.msg.name_required", language) })}
-          />
-
-          <Field
-            label={t("profile.phone_number", language)}
-            icon={Phone}
-            registration={register('contactNo')}
-            placeholder={t("profile.edit.phone_placeholder", language)}
-          />
-
-          <Field
-            label={t("profile.email_address", language)}
-            icon={Mail}
-            type="email"
-            disabled={true}
-            registration={register('email', { required: t("profile.edit.msg.email_required", language) })}
-          />
-          <div className="flex items-center gap-2 p-4 rounded-2xl bg-muted/30 border border-dashed border-muted-foreground/20">
-            <CheckCircle2 size={16} className="text-muted-foreground" />
-            <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">{t("profile.edit.msg.email_verification_notice", language)}</p>
-          </div>
-        </motion.section>
-
-        {/* Submit */}
-        <FooterButtons>
-          <Button
-            type="submit"
-            className="h-14 w-auto p-8 rounded-full gap-3 font-semibold uppercase bg-primary text-white shadow-lg shadow-primary/30 transition-all hover:bg-primary/90 hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 py-2"
-          >
-            <LoadingSwap isLoading={isSubmitting}>
-              <div className="flex items-center gap-2">
-                <Edit3 size={18} />
-                <span className="hidden md:block">{t("profile.edit.update_profile_button", language)}</span>
-              </div>
-            </LoadingSwap>
-          </Button>
-        </FooterButtons>
-      </form>
-    </motion.div>
+              <LoadingSwap isLoading={isSubmitting}>
+                <div className="flex items-center gap-2">
+                  <Edit3 size={18} />
+                  <span className="hidden md:block">{t("profile.edit.update_profile_button", language)}</span>
+                </div>
+              </LoadingSwap>
+            </Button>
+          </FooterButtons>
+        </form>
+      </motion.div>
+    </div>
   )
 }
 

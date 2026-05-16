@@ -20,6 +20,7 @@ import { signOut } from "@/lib/auth/auth-client";
 import { t } from "@/lib/languages/i18n";
 import { useCurrentUser } from "@/tanstacks/user";
 import { getInitials } from "@/utility/commonFunction";
+import { containerVariants, itemVariants } from "@/lib/animations";
 
 export default function ProfilePage() {
     const router = useRouter();
@@ -38,21 +39,6 @@ export default function ProfilePage() {
 
     if (isLoading) return <ProfileSkeleton />;
 
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.1
-            }
-        }
-    };
-
-    const itemVariants = {
-        hidden: { opacity: 0, y: 20 },
-        visible: { opacity: 1, y: 0 }
-    };
-
     return (
         <div className="w-full bg-background pb-34">
             <BackHeader
@@ -63,7 +49,7 @@ export default function ProfilePage() {
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
-                className="mx-auto max-lg px-6 mt-8 space-y-8"
+                className="mx-auto max-w-4xl mt-6 space-y-8 px-6"
             >
                 {/* Profile Card */}
                 <motion.div

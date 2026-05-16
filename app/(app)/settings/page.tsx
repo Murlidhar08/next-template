@@ -107,20 +107,7 @@ export default function SettingsPage() {
     }
   };
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 10 },
-    visible: { opacity: 1, y: 0 }
-  };
 
   return (
     <div className="min-h-screen bg-background pb-34">
@@ -364,6 +351,7 @@ export default function SettingsPage() {
           </Button>
         </FooterButtons>
 
+        {/* App Version */}
         <motion.div
           variants={itemVariants}
           className="text-center space-y-2 opacity-50 pt-4"
@@ -378,6 +366,7 @@ export default function SettingsPage() {
 
 import { FooterButtons } from "@/components/footer-buttons";
 import { Skeleton } from "@/components/ui/skeleton";
+import { containerVariants, itemVariants } from "@/lib/animations";
 
 function SettingsSkeleton() {
   return (
@@ -437,7 +426,7 @@ function Row({ icon: Icon, label, labelClassName, iconContainerClassName, href, 
   return (
     <motion.div
       whileTap={{ scale: 0.98 }}
-      className="flex items-center gap-4 px-4 h-16 group cursor-pointer rounded-xl hover:bg-primary/10"
+      className="flex items-center gap-4 px-4 h-16 group cursor-pointer rounded-xl hover:bg-primary/5"
       onClick={() => { if (href) router.push(href as any) }}
     >
       <div className={cn("h-8 w-8 rounded-full bg-primary/10 text-primary flex items-center justify-center group-hover:scale-110 group-hover:rotate-12 transition-all", iconContainerClassName)}>

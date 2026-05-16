@@ -9,6 +9,7 @@ import { t } from "@/lib/languages/i18n";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { LinkAccountModalBody } from "./components/link-account-body";
+import { containerVariants } from "@/lib/animations";
 
 type Account = Awaited<ReturnType<typeof auth.api.listUserAccounts>>[number];
 
@@ -36,18 +37,10 @@ export default function LinkAccountPage() {
             />
 
             <motion.div
-                variants={{
-                    hidden: { opacity: 0 },
-                    visible: {
-                        opacity: 1,
-                        transition: {
-                            staggerChildren: 0.1
-                        }
-                    }
-                }}
+                variants={containerVariants}
                 initial="hidden"
                 animate="visible"
-                className="mx-auto max-w-lg p-6 mt-4"
+                className="mx-auto max-w-4xl mt-6 space-y-8 px-6"
             >
                 <LinkAccountModalBody currentAccounts={currAccount} />
             </motion.div>
