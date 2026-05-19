@@ -1,8 +1,8 @@
 "use client"
 
 import { Currency, ThemeMode } from "@/lib/generated/prisma/enums"
-import { useTheme } from "next-themes"
 import { setActiveLanguage } from "@/lib/languages/i18n"
+import { useTheme } from "next-themes"
 import { createContext, useContext, useEffect, useState } from "react"
 
 interface userSettings {

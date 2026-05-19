@@ -9,11 +9,8 @@ export const translations: Record<Language, any> = {
 };
 
 let activeLanguage: Language = "en";
-
 export function setActiveLanguage(lang: string) {
-    if (lang === "hi" || lang === "en") {
-        activeLanguage = lang;
-    }
+    activeLanguage = lang as Language;
 }
 
 export function getActiveLanguage(): Language {
