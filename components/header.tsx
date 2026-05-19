@@ -2,15 +2,14 @@
 
 import { useSession } from "@/lib/auth/auth-client"
 import { envClient } from "@/lib/env.client"
-import { getInitials } from "@/utility/commonFunction"
 import clsx from "clsx"
 import { motion } from "framer-motion"
 import { Menu } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
+import ProfileAvatar from "./auth/profile-avatar"
 import { useNavItems } from "./navbar/use-nav-items"
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 import { Button } from "./ui/button"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet"
 
@@ -90,15 +89,7 @@ const Header = ({ title, isProfile }: HeaderProps) => {
 
       <div className="w-1/4 sm:w-1/3 flex justify-end">
         {showProfile && (
-          <Avatar
-            onClick={handleRedirect}
-            className="h-8 w-8 sm:h-9 sm:w-9 ring-2 ring-primary/20 ring-offset-2 ring-offset-background shadow-lg cursor-pointer transition-all hover:ring-primary/50"
-          >
-            <AvatarImage src={session?.user?.image || ''} className="object-cover" />
-            <AvatarFallback className="bg-primary text-primary-foreground text-[10px] sm:text-xs font-bold font-mono">
-              {getInitials(session?.user?.name)}
-            </AvatarFallback>
-          </Avatar>
+          <ProfileAvatar />
         )}
       </div>
     </motion.header>

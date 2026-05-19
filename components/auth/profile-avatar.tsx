@@ -3,7 +3,6 @@
 import { authClient } from "@/lib/auth/auth-client";
 import { useDeviceSessions, useSetActiveSession } from "@/tanstacks/user";
 import { getInitials } from "@/utility/commonFunction";
-import { motion } from "framer-motion";
 import { LogOut, Plus, User as UserIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
@@ -40,20 +39,12 @@ export default function ProfileAvatar() {
         <DropdownMenu>
             <DropdownMenuTrigger
                 render={
-                    <motion.div
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="relative outline-none cursor-pointer"
-                    >
-                        <Avatar
-                            className="h-11 w-11 ring-2 ring-primary/20 ring-offset-4 ring-offset-background shadow-2xl transition-all hover:ring-primary/40 outline-none"
-                        >
-                            <AvatarImage src={session?.user?.image || ''} className="object-cover" />
-                            <AvatarFallback className="bg-primary/5 text-primary text-xs font-black uppercase tracking-widest leading-none bg-linear-to-br from-primary/10 to-transparent">
-                                {getInitials(session?.user?.name)}
-                            </AvatarFallback>
-                        </Avatar>
-                    </motion.div>
+                    <Avatar className="h-8 w-8 sm:h-9 sm:w-9 ring-2 ring-primary/20 ring-offset-2 ring-offset-background shadow-lg cursor-pointer transition-all hover:ring-primary/50">
+                        <AvatarImage src={session?.user?.image || ''} className="object-cover" />
+                        <AvatarFallback className="bg-primary text-primary-foreground text-[10px] sm:text-xs font-bold font-mono">
+                            {getInitials(session?.user?.name)}
+                        </AvatarFallback>
+                    </Avatar>
                 }
             />
             <DropdownMenuContent align="end" className="w-64 p-2">
