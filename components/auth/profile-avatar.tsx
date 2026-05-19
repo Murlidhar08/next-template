@@ -3,7 +3,7 @@
 import { authClient } from "@/lib/auth/auth-client";
 import { useDeviceSessions, useSetActiveSession } from "@/tanstacks/user";
 import { getInitials } from "@/utility/commonFunction";
-import { LogOut, Plus, User as UserIcon } from "lucide-react";
+import { LogOut, User as UserIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
@@ -60,7 +60,8 @@ export default function ProfileAvatar() {
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
 
-                <DropdownMenuGroup>
+                {/* TODO: PENDING - Multiple Accounts  */}
+                {/* <DropdownMenuGroup>
                     <DropdownMenuLabel className="text-xs text-muted-foreground font-semibold uppercase tracking-wider">
                         Switch account
                     </DropdownMenuLabel>
@@ -90,8 +91,7 @@ export default function ProfileAvatar() {
                         </DropdownMenuItem>
                     )}
                 </DropdownMenuGroup>
-
-                <DropdownMenuSeparator />
+                <DropdownMenuSeparator /> */}
 
                 <DropdownMenuItem onClick={handleManageProfile} className="cursor-pointer py-2">
                     <UserIcon className="h-4 w-4 mr-2" />
